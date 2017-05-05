@@ -18,5 +18,9 @@ public class Player extends Actor
 	{
 		return myHealth;
 	}
+	public int getSpeed()
+	{
+		return mySpeed;
+	}
 
 }

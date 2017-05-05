@@ -25,7 +25,7 @@ public class Actor
 		myDirection = 0;
 		x = 40;
 		y = 60;
-	    ImageIcon ii = new ImageIcon("images/craft.png");
+	    ImageIcon ii = new ImageIcon("images/shooter.png");
 	    myImage = ii.getImage();
 	}
 	

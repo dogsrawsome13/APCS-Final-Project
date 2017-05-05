@@ -18,8 +18,8 @@ import info.finalproject.actor.Player;
 public class Board extends JPanel implements ActionListener
 {
 	private Timer myTimer;
-	private Craft craft;
-	private final int DELAY = 10;
+	private Player player1;
+	private final int DELAY = 1;
 	
 	public Board()
 	{
@@ -30,8 +30,8 @@ public class Board extends JPanel implements ActionListener
 	{
 		addKeyListener(new TAdapter());
 		setFocusable(true);
-		setBackground(Color.BLACK);
-		craft = new Craft();
+		setBackground(Color.WHITE);
+		player1 = new Player(100, 10, 10);
 		myTimer = new Timer(DELAY, this);
 		myTimer.start();
 		
@@ -50,13 +50,13 @@ public class Board extends JPanel implements ActionListener
     {
         
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);        
+        g2d.drawImage(player1.getImage(), player1.getX(), player1.getY(), this);        
     }
     
     public void actionPerformed(ActionEvent e)
     {
         
-        craft.move();
+        player1.move();
         repaint();  
     }
     
@@ -66,12 +66,12 @@ public class Board extends JPanel implements ActionListener
         @Override
         public void keyReleased(KeyEvent e)
         {
-            craft.keyReleased(e);
+            player1.keyReleased(e);
         }
         
         public void keyPressed(KeyEvent e)
         {
-            craft.keyPressed(e);
+            player1.keyPressed(e);
         }
     }
     
