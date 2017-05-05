@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -21,7 +19,7 @@ public class Board extends JPanel implements ActionListener
 {
 	private Timer myTimer;
 	private Craft craft;
-	private final int DELAY = 1;
+	private final int DELAY = 10;
 	
 	public Board()
 	{
@@ -70,12 +68,14 @@ public class Board extends JPanel implements ActionListener
         {
             craft.keyReleased(e);
         }
+        
+        public void keyPressed(KeyEvent e)
+        {
+            craft.keyPressed(e);
+        }
     }
     
-    public void keyPressed(KeyEvent e)
-    {
-        craft.keyPressed(e);
-    }
+  
     
 
 }
