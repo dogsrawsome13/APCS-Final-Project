@@ -6,9 +6,13 @@ public class Player extends Actor
 	private int myAmmo;
 	private int mySpeed;
 	
-	public Player()
+	public Player(int health, int ammo, int speed)
 	{
 		super();
+		myHealth = health;
+		myAmmo = ammo;
+		mySpeed = speed;
+		
 		
 	}
 
