@@ -1,20 +1,14 @@
 package info.finalproject.gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
-import info.finalproject.actor.Actor;
-import info.finalproject.actor.Craft;
+import javax.swing.*;
+
 import info.finalproject.actor.Player;
-
 public class Board extends JPanel implements ActionListener
 {
 	private Timer myTimer;
