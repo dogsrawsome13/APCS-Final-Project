@@ -12,7 +12,6 @@ public class Player extends Actor
 		myHealth = health;
 		myAmmo = ammo;
 		mySpeed = speed;
-		
 	}
 	
 	public int getHealth()
