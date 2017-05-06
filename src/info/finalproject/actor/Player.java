@@ -17,6 +17,7 @@ public class Player extends Actor
 		myAmmo = ammo;
 		mySpeed = speed;
 		myDegrees = degrees;
+		loadImage("images/shooter.png");
 	}
 	
 	public int getHealth()
@@ -63,7 +64,6 @@ public class Player extends Actor
         if (key == KeyEvent.VK_LEFT)
         {
         	rotateLeft();
-
         }
 
         if (key == KeyEvent.VK_RIGHT)

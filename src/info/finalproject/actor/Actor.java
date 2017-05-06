@@ -24,7 +24,7 @@ public class Actor
 		myX = 100;
 		myY = 100;
 		visible = true;
-		loadImage("images/shooter.png");
+		loadImage("");
 	}
 	
 	public void loadImage(String imageName)
