@@ -56,8 +56,6 @@ public class Board extends JPanel implements ActionListener
     
     public void actionPerformed(ActionEvent e)
     {
-        
-        player1.move();
         repaint();  
     }
     

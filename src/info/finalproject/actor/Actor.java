@@ -14,8 +14,7 @@ public class Actor
 	private int myWidth;
 	private int myX;
 	private int myY;
-	private int myDx;
-	private int myDy;
+	private boolean visible;
 	private Image myImage;
 	
 	public Actor()
@@ -24,7 +23,13 @@ public class Actor
 		myWidth = 50;
 		myX = 100;
 		myY = 100;
-	    ImageIcon ii = new ImageIcon("images/shooter.png");
+		visible = true;
+		loadImage("images/shooter.png");
+	}
+	
+	public void loadImage(String imageName)
+	{
+	    ImageIcon ii = new ImageIcon(imageName);
 	    myImage = ii.getImage();
 	}
 	
@@ -47,16 +52,6 @@ public class Actor
     public int getY() 
     {
         return myY;
-    }
-    
-    public int getDx()
-    {
-    	return myDx;
-    }
-    
-    public int getDy()
-    {
-    	return myDy;
     }
     
     public Image getImage()
@@ -84,29 +79,16 @@ public class Actor
     	myY = y;
     }
     
-    public void setDx(int dx)
+    public boolean isVisible()
     {
-    	myDx = dx; 
+    	return visible;
     }
     
-    public void setDy(int dy)
+    public void setVisible(boolean vis)
     {
-    	myDy = dy;
+    	visible = vis;
     }
-    
-    
-    public void move()
-    {
-        myX += myDx;
-        myY += myDy;
-    }
-    
-
-
-
-
-    
-
+   
 }
     
 	
