@@ -49,11 +49,11 @@ public class Player extends Actor
     }
     public void rotateLeft()
     {
-        myDegrees = myDegrees - 1;
+        myDegrees = myDegrees - 5;
     }
     public void rotateRight()
     {
-        myDegrees = myDegrees + 1;
+        myDegrees = myDegrees + 5;
     }
 	
     public void keyPressed(KeyEvent e)
