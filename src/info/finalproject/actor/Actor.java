@@ -2,6 +2,7 @@ package info.finalproject.actor;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 
@@ -11,90 +12,101 @@ public class Actor
 {
 	private int myHeight;
 	private int myWidth;
-	private int myDirection;
-	private int x;
-	private int y;
-	private int dx;
-	private int dy;
+	private int myX;
+	private int myY;
+	private int myDx;
+	private int myDy;
 	private Image myImage;
 	
 	public Actor()
 	{
 		myHeight = 50;
 		myWidth = 50;
-		myDirection = 0;
-		x = 40;
-		y = 60;
+		myX = 100;
+		myY = 100;
 	    ImageIcon ii = new ImageIcon("images/shooter.png");
 	    myImage = ii.getImage();
 	}
 	
-    public void move()
-    {
-        x += dx;
-        y += dy;
-    }
+	public int getHeight()
+	{
+		return myHeight;
+	}
+	
+	public int getWidth()
+	{
+		return myWidth;
+	}
+	
     
     public int getX() 
     {
-        return x;
+        return myX;
     }
 
     public int getY() 
     {
-        return y;
+        return myY;
     }
-
+    
+    public int getDx()
+    {
+    	return myDx;
+    }
+    
+    public int getDy()
+    {
+    	return myDy;
+    }
+    
     public Image getImage()
     {
         return myImage;
     }
     
-    public void keyPressed(KeyEvent e)
+    public void setHeight(int height)
     {
-
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_LEFT)
-        {
-            dx = -1;
-        }
-
-        if (key == KeyEvent.VK_RIGHT)
-        {
-            dx = 1;
-        }
-
-        if (key == KeyEvent.VK_UP) 
-        {
-            dy = -1;
-        }
-
-        if (key == KeyEvent.VK_DOWN)
-        {
-            dy = 1;
-        }
+    	myHeight = height;
     }
     
-    public void keyReleased(KeyEvent e)
+    public void setWidth(int width)
     {
-        
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_LEFT) {
-            dx = 0;
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            dx = 0;
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            dy = 0;
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            dy = 0;
-        }
+    	myWidth = width;
     }
+    
+    public void setX(int x)
+    {
+    	myX = x;
+    }
+    
+    public void setY(int y)
+    {
+    	myY = y;
+    }
+    
+    public void setDx(int dx)
+    {
+    	myDx = dx; 
+    }
+    
+    public void setDy(int dy)
+    {
+    	myDy = dy;
+    }
+    
+    
+    public void move()
+    {
+        myX += myDx;
+        myY += myDy;
+    }
+    
+
+
+
+
+    
+
 }
     
 	

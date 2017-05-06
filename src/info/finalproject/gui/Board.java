@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.*;
 
 import javax.swing.*;
 
@@ -24,10 +25,12 @@ public class Board extends JPanel implements ActionListener
 	{
 		addKeyListener(new TAdapter());
 		setFocusable(true);
+        setDoubleBuffered(true);
 		setBackground(Color.WHITE);
-		player1 = new Player(100, 10, 10);
+		player1 = new Player(100, 10, 10, 180);
 		myTimer = new Timer(DELAY, this);
 		myTimer.start();
+		
 		
 	}
 	
@@ -42,9 +45,13 @@ public class Board extends JPanel implements ActionListener
     
     private void doDrawing(Graphics g)
     {
+        Graphics2D g2d = (Graphics2D)g.create();
+        g2d.rotate(Math.toRadians(player1.getDegrees() -90), player1.getX() + 
+        		player1.getImage().getWidth(null) / 2,
+        		player1.getY() + player1.getImage().getHeight(null)/2);
         
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(player1.getImage(), player1.getX(), player1.getY(), this);        
+        g2d.drawImage(player1.getImage(), player1.getX(), player1.getY(), null);
+        g2d.dispose();       
     }
     
     public void actionPerformed(ActionEvent e)
@@ -56,13 +63,6 @@ public class Board extends JPanel implements ActionListener
     
     private class TAdapter extends KeyAdapter
     {
-
-        @Override
-        public void keyReleased(KeyEvent e)
-        {
-            player1.keyReleased(e);
-        }
-        
         public void keyPressed(KeyEvent e)
         {
             player1.keyPressed(e);
