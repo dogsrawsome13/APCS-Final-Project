@@ -12,19 +12,21 @@ public class Actor
 {
 	private int myHeight;
 	private int myWidth;
+	private int myArea;
 	private int myX;
 	private int myY;
 	private boolean visible;
 	private Image myImage;
 	
-	public Actor()
+	public Actor(int x, int y, String imageName)
 	{
-		myHeight = 50;
-		myWidth = 50;
-		myX = 100;
-		myY = 100;
+		loadImage(imageName);
+		myHeight = myImage.getHeight(null);
+		myWidth = myImage.getWidth(null);
+		myArea = myHeight*myWidth;
+		myX = x;
+		myY = y;
 		visible = true;
-		loadImage("");
 	}
 	
 	public void loadImage(String imageName)

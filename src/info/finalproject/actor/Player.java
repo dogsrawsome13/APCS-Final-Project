@@ -2,22 +2,31 @@ package info.finalproject.actor;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import info.finalproject.weapon.Pistol;
+import info.finalproject.weapon.Weapon;
 
 public class Player extends Actor
 {
 	private int myHealth;
-	private int myAmmo;
 	private int mySpeed;
 	private double myDegrees;
+	Weapon myWeapon;
+	private ArrayList<Weapon> myAmmo;
 	
-	public Player(int health, int ammo, int speed, double degrees)
+	public Player(int x, int y, String imageName, int health, int ammo, 
+			int speed, double degrees, Weapon weapon)
 	{
-		super();
+		super(x, y, imageName);
 		myHealth = health;
-		myAmmo = ammo;
 		mySpeed = speed;
 		myDegrees = degrees;
-		loadImage("images/shooter.png");
+		myAmmo = new ArrayList();
+		
+		if (weapon instanceof Pistol)
+			myWeapon = new Pistol(super.getX(), super.getY(), "missiles.png", myDegrees);
+			
 	}
 	
 	public int getHealth()
@@ -25,10 +34,6 @@ public class Player extends Actor
 		return myHealth;
 	}
 	
-	public int getAmmo()
-	{
-		return myAmmo;
-	}
 	public int getSpeed()
 	{
 		return mySpeed;
@@ -37,6 +42,15 @@ public class Player extends Actor
 	{
 		return myDegrees;
 	}
+	
+	public Weapon getWeapon()
+	{
+		return myWeapon;
+	}
+    public ArrayList getAmmo()
+    {
+    	return myAmmo;
+    }
 	
     public void moveForward()
     {
@@ -56,11 +70,26 @@ public class Player extends Actor
     {
         myDegrees = myDegrees + 5;
     }
+    
+    
+    public void fire()
+    {
+		if (myWeapon instanceof Pistol)
+			myAmmo.add(new Pistol(super.getX() + super.getImage().getWidth(null) / 2,
+					super.getY() + super.getImage().getHeight(null) / 2,
+					"images/missile.png", myDegrees));
+    }
+    
 	
     public void keyPressed(KeyEvent e)
     {
 
         int key = e.getKeyCode();
+        
+        if (key == KeyEvent.VK_SPACE)
+        {
+            fire();
+        }
         if (key == KeyEvent.VK_LEFT)
         {
         	rotateLeft();
