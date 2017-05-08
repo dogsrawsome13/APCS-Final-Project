@@ -13,8 +13,8 @@ public class Weapon extends Powerup
     public Weapon(double degrees)
     {
     	super(0, 0, null);
-    	boardHeight = 1000;
-    	boardWidth = 1000;
+    	boardHeight = 2000;
+    	boardWidth = 2000;
     	myDegrees = degrees;
     }
 

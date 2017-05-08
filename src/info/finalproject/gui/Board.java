@@ -15,7 +15,7 @@ import info.finalproject.actor.Powerup;
 import info.finalproject.weapon.Pistol;
 import info.finalproject.weapon.Weapon;
 public class Board extends JPanel implements ActionListener
-{
+{ 
 	private Timer myTimer;
 	private Player player1;
 	private Powerup powerup;
@@ -108,8 +108,5 @@ public class Board extends JPanel implements ActionListener
             player1.keyPressed(e);
         }
     }
-    
-  
-    
 
 }
