@@ -7,35 +7,32 @@ public class Weapon extends Powerup
 	private int boardHeight;
     private int boardWidth;
     private int mySpeed;
-    private double myDegrees;
-    
-    
-    public Weapon(double degrees)
-    {
-    	super(0, 0, null);
-    	boardHeight = 2000;
-    	boardWidth = 2000;
-    	myDegrees = degrees;
-    }
+    private double myDirection;
 
 	
-	public Weapon(int x, int y, String imageName, double degrees)
+	public Weapon(double x, double y, double direction, int w, int h, String imageName)
 	{
-		super(x, y, imageName);
+		super(x, y, w, h, imageName);
 
-		boardHeight = 1000;
-		boardWidth = 1000;
-		myDegrees = degrees;
+		boardHeight = 2000;
+		boardWidth = 2000;
+		myDirection = direction;
 	}
 	
 	public int getBoardWidth()
 	{
 		return boardWidth;
 	}
+	
+	public double getBoardHeight()
+	{
+		return boardHeight;
+	}
+	
 	public void move()
 	{
-		super.setX(super.getX() + (int) (Math.sin(myDegrees * (Math.PI/180)) * mySpeed));
-	    super.setY(super.getY() + (int) (Math.cos(myDegrees * (Math.PI/180)) * -mySpeed));
+		super.setX(super.getX() + (int) (Math.cos(myDirection) * mySpeed));
+	    super.setY(super.getY() + (int) (Math.sin(myDirection) * mySpeed));
 	}
 
 
