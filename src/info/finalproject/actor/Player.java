@@ -74,10 +74,9 @@ public class Player extends Actor
               // setting the bullet
               Board.bullet.setX(super.getX() + super.getWidth());
               Board.bullet.setY(super.getY() + super.getHeight() / 2);
-              Board.bullet.setDirection(super.getDirection());
-              System.out.println(Math.toDegrees(Board.bullet.getDirection()));
-              Board.bullet.setWidth(20);
-              Board.bullet.setHeight(20);
+              Board.bullet.setDirection(Math.toDegrees(super.getDirection()));
+              Board.bullet.setWidth(10);
+              Board.bullet.setHeight(10 );
               // adding the bullet to the array list
               bullets.add(new Weapon(Board.bullet.getX(),
                       Board.bullet.getY(), Board.bullet.getDirection(), 
