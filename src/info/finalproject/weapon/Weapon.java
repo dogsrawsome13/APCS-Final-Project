@@ -15,7 +15,7 @@ public class Weapon extends Powerup
 
 		boardHeight = 2000;
 		boardWidth = 2000;
-		mySpeed = 2;
+		mySpeed = 10;
 	}
 	
 	public int getBoardWidth()

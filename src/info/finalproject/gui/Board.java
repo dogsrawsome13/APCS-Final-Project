@@ -122,22 +122,26 @@ public class Board extends JPanel implements Runnable
 
         // moving bullets
         
-        	
+        	if (player1.getWeapon() instanceof Pistol)
+        	{
+                ArrayList<Weapon> tmpWs = player1.getBullets();
+                
+                for (int i = 0; i < tmpWs.size(); i++)
+                {
+                   Weapon tmpW = (Weapon) tmpWs.get(i);
+
+                   tmpW.move();
+
+                   if (tmpW.getX() > 2000 || tmpW.getX() < 0
+                         || tmpW.getY() > 2000 || tmpW.getY() < 0)
+                   {
+                      tmpWs.remove(i);
+                   }
+                }
+        		
+        	}
         
-            ArrayList<Weapon> tmpWs = player1.getBullets();
-            
-            for (int i = 0; i < tmpWs.size(); i++)
-            {
-               Weapon tmpW = (Weapon) tmpWs.get(i);
 
-               tmpW.move();
-
-               if (tmpW.getX() > 2000 || tmpW.getX() < 0
-                     || tmpW.getY() > 2000 || tmpW.getY() < 0)
-               {
-                  tmpWs.remove(i);
-               }
-            }
         
         
         // check if shooting
