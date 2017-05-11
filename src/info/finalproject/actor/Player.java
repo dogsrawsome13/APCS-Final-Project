@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import info.finalproject.gui.Board;
 import info.finalproject.weapon.Pistol;
 import info.finalproject.weapon.Weapon;
 
@@ -11,22 +12,20 @@ public class Player extends Actor
 {
 	private int myHealth;
 	private int mySpeed;
-	private double myDegrees;
-	Weapon myWeapon;
-	private ArrayList<Weapon> myAmmo;
+	private int tmpLoad;
+	private Weapon myWeapon;
+	private ArrayList<Weapon> bullets;
+	private boolean moveForward, canForward, canBackward, moveBackward, left,
+    right, fire, special;
 	
-	public Player(int x, int y, String imageName, int health, int ammo, 
-			int speed, double degrees, Weapon weapon)
+	public Player(int x, int y, double degrees, int width, int height, String imageName, 
+			int speed, Weapon weapon)
 	{
-		super(x, y, imageName);
-		myHealth = health;
+		super(x, y, degrees, width, height, imageName);
+		myHealth = 100;
 		mySpeed = speed;
-		myDegrees = degrees;
-		myAmmo = new ArrayList();
-		
-		if (weapon instanceof Pistol)
-			myWeapon = new Pistol(super.getX(), super.getY(), "missiles.png", myDegrees);
-			
+		bullets = new ArrayList();
+		tmpLoad = 0;
 	}
 	
 	public int getHealth()
@@ -38,81 +37,61 @@ public class Player extends Actor
 	{
 		return mySpeed;
 	}
-	public double getDegrees()
-	{
-		return myDegrees;
-	}
 	
 	public Weapon getWeapon()
 	{
 		return myWeapon;
 	}
-    public ArrayList getAmmo()
-    {
-    	return myAmmo;
-    }
 	
-    public void moveForward()
-    {
-        super.setX(super.getX() + (int) (Math.sin(myDegrees * (Math.PI/180)) * mySpeed));
-        super.setY(super.getY() + (int) (Math.cos(myDegrees * (Math.PI/180)) * -mySpeed));
-    }
-    public void moveBackward()
-    {
-        super.setX(super.getX() - (int) (Math.sin(myDegrees * (Math.PI/180)) * mySpeed));
-        super.setY(super.getY() - (int) (Math.cos(myDegrees * (Math.PI/180)) * -mySpeed));
-    }
-    public void rotateLeft()
-    {
-        myDegrees = myDegrees - 5;
-    }
-    public void rotateRight()
-    {
-        myDegrees = myDegrees + 5;
-    }
-    
-    
-    public void fire()
-    {
-		if (myWeapon instanceof Pistol)
-			myAmmo.add(new Pistol(super.getX() + super.getImage().getWidth(null) / 2,
-					super.getY() + super.getImage().getHeight(null) / 2,
-					"images/missile.png", myDegrees));
-    }
-    
-	
-    public void keyPressed(KeyEvent e)
-    {
 
-        int key = e.getKeyCode();
+    public ArrayList<Weapon> getBullets()
+    {
+    	return bullets;
+    }
+	
+    public void moveForward(int sx, int sy)
+    {
+        super.setX(super.getX() + Math.cos(super.getDirection()) * sx);
+        super.setY(super.getY() + Math.sin(super.getDirection()) * sy);
+    }
+    public void moveBackward(int sx, int sy)
+    {
+    	super.setX(super.getX() - Math.cos(super.getDirection()) * sx);
+        super.setY(super.getY() - Math.sin(super.getDirection()) * sy);
+    }
+
+    
+    
+    public void fire(int load, int number, int spread)
+    {
         
-        if (key == KeyEvent.VK_SPACE)
-        {
-            fire();
+        // if reloading time is done
+        if (tmpLoad == 0)
+        { 
+
+           for (int i = 0; i < number; i++)
+           {
+              // setting the bullet
+              Board.bullet.setX(super.getX() + super.getWidth());
+              Board.bullet.setY(super.getY() + super.getHeight() / 2);
+              Board.bullet.setDirection(super.getDirection());
+              System.out.println(Math.toDegrees(Board.bullet.getDirection()));
+              Board.bullet.setWidth(20);
+              Board.bullet.setHeight(20);
+              // adding the bullet to the array list
+              bullets.add(new Weapon(Board.bullet.getX(),
+                      Board.bullet.getY(), Board.bullet.getDirection(), 
+                      Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
+           }
+           //reset the reload time 
+           tmpLoad = load;
         }
-        if (key == KeyEvent.VK_LEFT)
+        else 
         {
-        	rotateLeft();
+           tmpLoad -= 1;  
         }
 
-        if (key == KeyEvent.VK_RIGHT)
-        {
-            rotateRight();
-        }
-
-        if (key == KeyEvent.VK_UP) 
-        {
-            moveForward();
-        }
-
-        if (key == KeyEvent.VK_DOWN)
-        {
-            moveBackward();
-        }
     }
-    
-   
-	
 
 
 }
