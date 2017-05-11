@@ -122,7 +122,6 @@ public class Board extends JPanel implements Runnable
 
         // moving bullets
         
-        	if (player1.getWeapon() instanceof Pistol)
         	{
                 ArrayList<Weapon> tmpWs = player1.getBullets();
                 
