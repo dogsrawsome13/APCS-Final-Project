@@ -41,13 +41,12 @@ public class Board extends JPanel implements Runnable
 	
 	private void initBoard()
 	{
-	    player1 = new Player(400, 300, 90, 50, 50, "images/Shooter.png", 30,
+	    player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
 	    		null);
-	    tmpAngle = 90;
+	    tmpAngle = 0;
 	    special = fire = left = right = moveForward = moveBackward = false;
 	    canForward = canBackward = true;
-	    sx = sy = 4;
-
+	    sx = sy = 2;
 	    bullet = new Weapon(0, 0, 0, 0, 0, null);
 	    bullets = player1.getBullets();
 	    reload = 30;
@@ -132,7 +131,6 @@ public class Board extends JPanel implements Runnable
                Weapon tmpW = (Weapon) tmpWs.get(i);
 
                tmpW.move();
-               
 
                if (tmpW.getX() > 2000 || tmpW.getX() < 0
                      || tmpW.getY() > 2000 || tmpW.getY() < 0)

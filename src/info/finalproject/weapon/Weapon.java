@@ -7,12 +7,11 @@ public class Weapon extends Powerup
 	private int boardHeight;
     private int boardWidth;
     private int mySpeed;
-    private double myDirection;
 
 	
 	public Weapon(double x, double y, double direction, int w, int h, String imageName)
 	{
-		super(x, y, w, h, imageName);
+		super(x, y, direction, w, h, imageName);
 
 		boardHeight = 2000;
 		boardWidth = 2000;
