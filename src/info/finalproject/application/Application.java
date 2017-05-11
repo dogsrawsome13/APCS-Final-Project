@@ -6,35 +6,24 @@ import info.finalproject.gui.*;
 
 public class Application extends JFrame
 {
+	
+	  public Application()
+	   {
+
+	      add(new Board());
+
+	      setTitle("Application");
+	      setSize(1000, 1000);
+	      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      setResizable(true);
+	      setVisible(true);
+	   }
+	  
+	  public static void main(String[] args)
+	   {
+	      new Application();
+	   }
     
-    public Application()
-    {
-        initUI();
-    }
-
-    private void initUI()
-    {
-
-        add(new Board());
-
-        setSize(1000, 1000);
-
-        setTitle("Application");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-    }    
+   
     
-    public static void main(String[] args)
-    {
-        EventQueue.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Application ex = new Application();
-                ex.setVisible(true);
-            }
-        }
-        );
-    }
 }

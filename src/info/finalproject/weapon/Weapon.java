@@ -16,7 +16,7 @@ public class Weapon extends Powerup
 
 		boardHeight = 2000;
 		boardWidth = 2000;
-		myDirection = direction;
+		mySpeed = 2;
 	}
 	
 	public int getBoardWidth()
@@ -31,17 +31,8 @@ public class Weapon extends Powerup
 	
 	public void move()
 	{
-		super.setX(super.getX() + (int) (Math.cos(myDirection) * mySpeed));
-	    super.setY(super.getY() + (int) (Math.sin(myDirection) * mySpeed));
+		super.setX(super.getX() + (int) (Math.cos(super.getDirection()) * mySpeed));
+	    super.setY(super.getY() + (int) (Math.sin(super.getDirection()) * mySpeed));
+
 	}
-
-
-
-
-	
-	
-
-
-
-
 }

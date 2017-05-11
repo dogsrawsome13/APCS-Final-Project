@@ -13,15 +13,16 @@ public class Actor
 	private boolean visible;
 	private Image myImage;
 	
-	public Actor(double x, double y, double degrees, String imageName)
+	public Actor(double x, double y, double degrees, int width, int height, String imageName)
 	{
-		loadImage(imageName);
-		myHeight = myImage.getHeight(null);
-		myWidth = myImage.getWidth(null);
 		myX = x;
 		myY = y;
 		myDegrees = degrees;
+		myHeight = width;
+		myWidth = height;
 		visible = true;
+		loadImage(imageName);
+
 	}
 	
 	public Actor(double x, double y, int w, int h, String imageName)
@@ -32,7 +33,6 @@ public class Actor
 		myX = x;
 		myY = y;
 		visible = true;
-		
 	}
 	
 	public void loadImage(String imageName)

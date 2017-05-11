@@ -18,10 +18,10 @@ public class Player extends Actor
 	private boolean moveForward, canForward, canBackward, moveBackward, left,
     right, fire, special;
 	
-	public Player(int x, int y, double degrees, String imageName, 
+	public Player(int x, int y, double degrees, int width, int height, String imageName, 
 			int speed, Weapon weapon)
 	{
-		super(x, y, degrees, imageName);
+		super(x, y, degrees, width, height, imageName);
 		myHealth = 100;
 		mySpeed = speed;
 		bullets = new ArrayList();
@@ -57,7 +57,7 @@ public class Player extends Actor
     public void moveBackward(int sx, int sy)
     {
     	super.setX(super.getX() - Math.cos(super.getDirection()) * sx);
-        super.setY(super.getY() - Math.sin(super.getDirection()) + sy);
+        super.setY(super.getY() - Math.sin(super.getDirection()) * sy);
     }
 
     
@@ -74,13 +74,14 @@ public class Player extends Actor
               // setting the bullet
               Board.bullet.setX(super.getX() + super.getWidth());
               Board.bullet.setY(super.getY() + super.getHeight() / 2);
-              Board.bullet.setDirection(super.getDirection() + ((spread * (i - 1)) / 2));
-              Board.bullet.setWidth(5);
-              Board.bullet.setHeight(5);
+              Board.bullet.setDirection(super.getDirection());
+              System.out.println(Math.toDegrees(Board.bullet.getDirection()));
+              Board.bullet.setWidth(20);
+              Board.bullet.setHeight(20);
               // adding the bullet to the array list
               bullets.add(new Weapon(Board.bullet.getX(),
-                      Board.bullet.getY(), Board.bullet.getDirection(), Board.bullet
-                            .getWidth(), Board.bullet.getHeight(), "images/missile.png"));
+                      Board.bullet.getY(), Board.bullet.getDirection(), 
+                      Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
            }
            //reset the reload time 
            tmpLoad = load;

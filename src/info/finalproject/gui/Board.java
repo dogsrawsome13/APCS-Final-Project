@@ -16,16 +16,15 @@ import info.finalproject.actor.Player;
 import info.finalproject.actor.Powerup;
 import info.finalproject.weapon.Pistol;
 import info.finalproject.weapon.Weapon;
+
 public class Board extends JPanel implements Runnable
 { 
-	  public static final int WIDTH = 1000, HEIGHT = 1000;
 	  public static Weapon bullet;
 
 	  private Thread loop; // the loop
 	  private Player player1;
-	  private ArrayList bullets;
-	  private int tmpAngle, sx, sy, reload, numToShoot, spread, bWidth,
-	         bHeight;
+	  private ArrayList<Weapon> bullets;
+	  private int tmpAngle, sx, sy, reload, numToShoot, spread;
 	  private boolean moveForward, canForward, canBackward, moveBackward, left,
 	         right, fire, special;
 
@@ -42,19 +41,18 @@ public class Board extends JPanel implements Runnable
 	
 	private void initBoard()
 	{
-	    player1 = new Player(400, 300, 0, "images/Shooter.png", 50, 
-	    		new Pistol(400, 300, 0, 10, 10, "images/missile.png"));
-	    tmpAngle = 0;
+	    player1 = new Player(400, 300, 90, 50, 50, "images/Shooter.png", 30,
+	    		null);
+	    tmpAngle = 90;
 	    special = fire = left = right = moveForward = moveBackward = false;
 	    canForward = canBackward = true;
-	    sx = sy = 2;
+	    sx = sy = 4;
 
-	    bullet = new Pistol(400, 300, 0, 10, 10, "images/missile.png");
+	    bullet = new Weapon(0, 0, 0, 0, 0, null);
 	    bullets = player1.getBullets();
 	    reload = 30;
 	    numToShoot = 1;
 	    spread = 0;
-
 
 	    loop = new Thread(this);
 	    loop.start();
@@ -73,6 +71,7 @@ public class Board extends JPanel implements Runnable
         // rotating the hero, rotation point is the middle of the square
         g2d.rotate(player1.getDirection(), player1.getX() + player1.getWidth(),
               player1.getY() + player1.getHeight() / 2);
+        
         // draw the image
         g2d.drawImage(player1.getImage(), (int) player1.getX(), (int) player1.getY(),
               player1.getWidth(), player1.getHeight(), this);
@@ -82,9 +81,18 @@ public class Board extends JPanel implements Runnable
         ArrayList bullets = player1.getBullets();
         for (int i = 0; i < bullets.size(); i++)
         {
-           Weapon tmpW = (Weapon) bullets.get(i);
-                          //playing with bullet colors
-           g2d.drawImage(tmpW.getImage(), (int) tmpW.getX(), (int) tmpW.getY(), dx2, dy2, sx1, sy1, sx2, sy2, observer)
+            Weapon tmpB = (Weapon) bullets.get(i);
+            //playing with bullet colors
+            if (i % 2 == 0) 
+            {
+            	g2d.setColor(new Color(150, 130, 100));
+            } 
+            else 
+            {
+            	g2d.setColor(new Color(60, 20, 120));
+            }
+            g2d.fillRect((int) tmpB.getX(), (int) tmpB.getY(), tmpB.getWidth(),
+            		tmpB.getHeight());
         }
         // in case you have other things to rotate
         g2d.setTransform(old);
@@ -95,44 +103,45 @@ public class Board extends JPanel implements Runnable
 
         // if the hero get off the screen
         // we make it appear from the opposite side of the screen
-        if (player1.getX() > 800)
+        if (player1.getX() > 2000)
         {
            player1.setX(0);
         }
         else if (player1.getX() < -100)
         {
-           player1.setX(800);
+           player1.setX(2000);
         }
 
-        if (player1.getY() > 600)
+        if (player1.getY() > 2000)
         {
            player1.setY(0);
         }
         else if (player1.getY() < -100)
         {
-           player1.setY(600);
+           player1.setY(2000);
         }
 
         // moving bullets
-        if (player1.getWeapon() instanceof Pistol)
-        {
-            ArrayList tmpWs = player1.getBullets();
+        
+        	
+        
+            ArrayList<Weapon> tmpWs = player1.getBullets();
+            
             for (int i = 0; i < tmpWs.size(); i++)
             {
-               Weapon tmpW = (Pistol) tmpWs.get(i);
+               Weapon tmpW = (Weapon) tmpWs.get(i);
 
                tmpW.move();
+               
 
-               if (tmpW.getX() > WIDTH || tmpW.getX() < 0
-                     || tmpW.getY() > HEIGHT || tmpW.getY() < 0)
+               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+                     || tmpW.getY() > 2000 || tmpW.getY() < 0)
                {
                   tmpWs.remove(i);
                }
-
             }
-        }
- 
-
+        
+        
         // check if shooting
         if (fire)
         {
@@ -160,7 +169,8 @@ public class Board extends JPanel implements Runnable
         if (tmpAngle > 360)
         {
            tmpAngle = 0;
-        } else if (tmpAngle < 0)
+        }
+        else if (tmpAngle < 0)
         {
            tmpAngle = 360;
 
@@ -174,6 +184,7 @@ public class Board extends JPanel implements Runnable
               player1.moveForward(sx, sy);
            }
         }
+        
         if (moveBackward)
         {
            if (canBackward)
@@ -185,8 +196,7 @@ public class Board extends JPanel implements Runnable
      }
     
     // game key controll
-    // (my keyboard is AZERTY so ignore the multiple key in
-    // the if statement
+
     private class Controll extends KeyAdapter 
     {
 
@@ -197,24 +207,22 @@ public class Board extends JPanel implements Runnable
                fire = true;
            }
 
-          if (e.getKeyCode() == e.VK_UP || e.getKeyCode() == e.VK_Z
-                || e.getKeyCode() == e.VK_W) {
+          if (e.getKeyCode() == e.VK_UP)
+          {
              moveForward = true;
-
           }
-          if (e.getKeyCode() == e.VK_DOWN || e.getKeyCode() == e.VK_S) {
+          if (e.getKeyCode() == e.VK_DOWN)
+          {
              moveBackward = true;
-
           }
-          if (e.getKeyCode() == e.VK_LEFT || e.getKeyCode() == e.VK_Q
-                || e.getKeyCode() == e.VK_A) {
+          
+          if (e.getKeyCode() == e.VK_LEFT)
+          {
              left = true;
           }
-          if (e.getKeyCode() == e.VK_RIGHT || e.getKeyCode() == e.VK_D) {
+          if (e.getKeyCode() == e.VK_RIGHT)
+          {
              right = true;
-          }
-          if (e.getKeyCode() == e.VK_SHIFT) {
-             fire = true;
           }
 
        }
@@ -246,9 +254,6 @@ public class Board extends JPanel implements Runnable
         }
     }
  */
-   
-    
-    
  
 
        public void keyReleased(KeyEvent e)
@@ -258,34 +263,26 @@ public class Board extends JPanel implements Runnable
                fire = false;
            }
 
-          if (e.getKeyCode() == e.VK_UP || e.getKeyCode() == e.VK_Z
-                || e.getKeyCode() == e.VK_W)
+          if (e.getKeyCode() == e.VK_UP)
           {
              moveForward = false;
           }
-          if (e.getKeyCode() == e.VK_DOWN || e.getKeyCode() == e.VK_S)
+          if (e.getKeyCode() == e.VK_DOWN)
           {
              moveBackward = false;
           }
-          if (e.getKeyCode() == e.VK_LEFT || e.getKeyCode() == e.VK_Q
-                || e.getKeyCode() == e.VK_A)
+          if (e.getKeyCode() == e.VK_LEFT)
           {
-
              left = false;
           }
-          if (e.getKeyCode() == e.VK_RIGHT || e.getKeyCode() == e.VK_D)
+          if (e.getKeyCode() == e.VK_RIGHT)
           {
              right = false;
           }
-          if (e.getKeyCode() == e.VK_SHIFT)
-          {
-             fire = false;
-          }
+
        }
     }
-
     
-
 	@Override
 	public void run() 
 	{
