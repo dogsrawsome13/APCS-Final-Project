@@ -22,17 +22,6 @@ public class Actor
 		myWidth = height;
 		visible = true;
 		loadImage(imageName);
-
-	}
-	
-	public Actor(double x, double y, int w, int h, String imageName)
-	{
-		loadImage(imageName);
-		myHeight = h;
-		myWidth = w;
-		myX = x;
-		myY = y;
-		visible = true;
 	}
 	
 	public void loadImage(String imageName)
@@ -51,6 +40,10 @@ public class Actor
 		return myWidth;
 	}
 	
+    public double getDirection()
+    {
+    	return myDegrees;
+    }
     
     public double getX() 
     {
@@ -92,10 +85,7 @@ public class Actor
     	myDegrees = Math.toRadians(degrees);
     }
     
-    public double getDirection()
-    {
-    	return myDegrees;
-    }
+
     public boolean isVisible()
     {
     	return visible;

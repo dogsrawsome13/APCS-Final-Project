@@ -23,6 +23,7 @@ public class Board extends JPanel implements Runnable
 
 	  private Thread loop; // the loop
 	  private Player player1;
+	  private Powerup powerup;
 	  private ArrayList<Weapon> bullets;
 	  private int tmpAngle, sx, sy, reload, numToShoot, spread;
 	  private boolean moveForward, canForward, canBackward, moveBackward, left,
@@ -43,6 +44,7 @@ public class Board extends JPanel implements Runnable
 	{
 	    player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
 	    		null);
+	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
 	    tmpAngle = 0;
 	    special = fire = left = right = moveForward = moveBackward = false;
 	    canForward = canBackward = true;
@@ -66,6 +68,12 @@ public class Board extends JPanel implements Runnable
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
               RenderingHints.VALUE_ANTIALIAS_ON);
         AffineTransform old = g2d.getTransform();
+        
+        if (powerup.isVisible())
+        	g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
+        		powerup.getHeight(), this);
+        
+        
 
         // rotating the hero, rotation point is the middle of the square
         g2d.rotate(player1.getDirection(), player1.getX() + player1.getWidth(),
@@ -96,7 +104,17 @@ public class Board extends JPanel implements Runnable
         // in case you have other things to rotate
         g2d.setTransform(old);
     }
+    public void checkCollisions()
+    {
+    	Rectangle r3 = player1.getBounds();
+        Rectangle r2 = powerup.getBounds();
+            
+        if (r3.intersects(r2))
+        	powerup.setVisible(false);
+
+     }
     
+
     public void play()
     {
 
@@ -119,25 +137,30 @@ public class Board extends JPanel implements Runnable
         {
            player1.setY(2000);
         }
+        
+        
 
         // moving bullets
         
-        	
+        	{
+                ArrayList<Weapon> tmpWs = player1.getBullets();
+                
+                for (int i = 0; i < tmpWs.size(); i++)
+                {
+                   Weapon tmpW = (Weapon) tmpWs.get(i);
+
+                   tmpW.move();
+
+                   if (tmpW.getX() > 2000 || tmpW.getX() < 0
+                         || tmpW.getY() > 2000 || tmpW.getY() < 0)
+                   {
+                      tmpWs.remove(i);
+                   }
+                }
+        		
+        	}
         
-            ArrayList<Weapon> tmpWs = player1.getBullets();
-            
-            for (int i = 0; i < tmpWs.size(); i++)
-            {
-               Weapon tmpW = (Weapon) tmpWs.get(i);
 
-               tmpW.move();
-
-               if (tmpW.getX() > 2000 || tmpW.getX() < 0
-                     || tmpW.getY() > 2000 || tmpW.getY() < 0)
-               {
-                  tmpWs.remove(i);
-               }
-            }
         
         
         // check if shooting
@@ -190,6 +213,8 @@ public class Board extends JPanel implements Runnable
               player1.moveBackward(sx, sy);
            }
         }
+        
+        checkCollisions();
 
      }
     
@@ -226,32 +251,6 @@ public class Board extends JPanel implements Runnable
        }
  
 
-/*
- *    public void checkCollisions()
-    {
-
-        Rectangle r3 = player1.getBounds();
-        Rectangle r2 = powerup.getBounds();
-        
-        if (r3.intersects(r2))
-        	powerup.setVisible(false);
-
-
-        ArrayList<Pistol> ammo = player1.getAmmo();
-
-        for (Weapon m : ammo)
-        {
-
-            Rectangle r1 = m.getBounds();
-
-            if (r1.intersects(r2))
-            {
-            	m.setVisible(false);
-                powerup.setVisible(false);
-            }
-        }
-    }
- */
  
 
        public void keyReleased(KeyEvent e)
