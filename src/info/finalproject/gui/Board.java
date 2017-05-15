@@ -278,7 +278,7 @@ public class Board extends JPanel implements Runnable
           }
 
        }
-    }
+    } //end private class
     
 	@Override
 	public void run() 

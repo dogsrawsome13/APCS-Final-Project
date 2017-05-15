@@ -1,18 +1,16 @@
 package info.finalproject.weapon;
 
-public class MachineGun extends Weapon{
+public class RPG extends Weapon {
 	
 	private int myAttack;
     private int mySpeed;
     
-	public MachineGun()
-	{
+	public RPG(){
 		super(0, 0, 0, 0, 0, null);
-		myAttack = 8;
-		mySpeed = 12;
+		myAttack = 20;
+		mySpeed = 7;
 	}
-	
-	public MachineGun(double x, double y, double direction, int width, 
+	public RPG(double x, double y, double direction, int width, 
 			int height, String imageName){
 		super(x, y, direction, width, height, imageName);
 		myAttack = 8;
