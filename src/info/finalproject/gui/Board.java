@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import info.finalproject.actor.Actor;
 import info.finalproject.actor.Player;
 import info.finalproject.actor.Powerup;
 import info.finalproject.weapon.Pistol;
@@ -43,7 +44,7 @@ public class Board extends JPanel implements Runnable
 	private void initBoard()
 	{
 	    player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
-	    		null);
+	    		new Pistol(400, 300, 0, 50, 50, "pistol.png"));
 	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
 	    tmpAngle = 0;
 	    special = fire = left = right = moveForward = moveBackward = false;
@@ -85,7 +86,7 @@ public class Board extends JPanel implements Runnable
         g2d.setTransform(old);
 
         // drawing the bullets
-        ArrayList bullets = player1.getBullets();
+        ArrayList<Weapon> bullets = player1.getBullets();
         for (int i = 0; i < bullets.size(); i++)
         {
             Weapon tmpB = (Weapon) bullets.get(i);
@@ -109,9 +110,12 @@ public class Board extends JPanel implements Runnable
     	Rectangle r3 = player1.getBounds();
         Rectangle r2 = powerup.getBounds();
             
-        if (r3.intersects(r2))
+        if (r3.intersects(r2)){
         	powerup.setVisible(false);
-
+        	Actor powerupItem = powerup.givePowerup();
+        	if(powerupItem instanceof Weapon)
+        		player1.setWeapon((Weapon) powerupItem);
+        }
      }
     
 
@@ -215,7 +219,7 @@ public class Board extends JPanel implements Runnable
         }
         
         checkCollisions();
-
+        System.out.println(player1.toString());
      }
     
     // game key controll

@@ -23,4 +23,7 @@ public class RPG extends Weapon {
         if (super.getX() > super.getBoardWidth())
             super.setVisible(false);
     }
+    public String toString(){
+    	return "RPG";
+    }
 }

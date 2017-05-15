@@ -25,4 +25,7 @@ public class MachineGun extends Weapon{
         if (super.getX() > super.getBoardWidth())
             super.setVisible(false);
     }
+    public String toString(){
+    	return "MachineGun";
+    }
 }

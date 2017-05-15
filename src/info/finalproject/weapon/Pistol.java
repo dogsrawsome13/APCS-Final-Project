@@ -19,4 +19,8 @@ public class Pistol extends Weapon{
 		super.setX(super.getX() + (int) (Math.cos(super.getDirection()) * mySpeed));
 	    super.setY(super.getY() + (int) (Math.sin(super.getDirection()) * mySpeed));
 	}
+	
+	public String toString(){
+		return "Pistol";
+	}
 }
