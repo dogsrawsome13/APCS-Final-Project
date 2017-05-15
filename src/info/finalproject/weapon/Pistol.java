@@ -14,6 +14,7 @@ public class Pistol extends Weapon
     	super(x, y, direction, w, h, imageName);
     	myAttack = 10;
     	mySpeed = 10;
+    	
     	super.setHeight(10);
     	super.setWidth(10);
     }
@@ -24,6 +25,4 @@ public class Pistol extends Weapon
 	    super.setY(super.getY() + (int) (Math.sin(super.getDirection()) * mySpeed));
 	}
 	
-
-
 }

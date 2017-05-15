@@ -13,6 +13,7 @@ public class Actor
 	private boolean visible;
 	private Image myImage;
 	
+	
 	public Actor(double x, double y, double degrees, int width, int height, String imageName)
 	{
 		myX = x;

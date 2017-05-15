@@ -14,6 +14,7 @@ import javax.swing.*;
 
 import info.finalproject.actor.Player;
 import info.finalproject.actor.Powerup;
+import info.finalproject.weapon.MachineGun;
 import info.finalproject.weapon.Pistol;
 import info.finalproject.weapon.Weapon;
 
@@ -21,13 +22,18 @@ public class Board extends JPanel implements Runnable
 { 
 	  public static Weapon bullet;
 
+
 	  private Thread loop; // the loop
 	  private Player player1;
+	  private Player player2;
 	  private Powerup powerup;
-	  private ArrayList<Weapon> bullets;
-	  private int tmpAngle, sx, sy, reload, numToShoot, spread;
-	  private boolean moveForward, canForward, canBackward, moveBackward, left,
-	         right, fire, special;
+	  private ArrayList<Weapon> bullets1, bullets2;
+	  private int tmpAngle1, tmpAngle2, sx, sy, reload, numToShoot, spread;
+	  private boolean moveForward1, canForward1, canBackward1, moveBackward1, left1,
+	         right1, fire1, special1;
+	  private boolean moveForward2, canForward2, canBackward2, moveBackward2, left2,
+      right2, fire2, special2;
+	 
 
 	
 	public Board()
@@ -42,15 +48,20 @@ public class Board extends JPanel implements Runnable
 	
 	private void initBoard()
 	{
-	    player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
-	    		null);
+	    player1 = new Player(400, 300, 0, 75, 75, "images/Shooter.png", 30);
+	    player2 = new Player(400, 300, 0, 75, 75, "images/Shooter.png", 30);
 	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
-	    tmpAngle = 0;
-	    special = fire = left = right = moveForward = moveBackward = false;
-	    canForward = canBackward = true;
+	    tmpAngle1 = 0;
+	    tmpAngle2 = 0;
+	    special1 = fire1 = left1 = right1 = moveForward1 = moveBackward1 = false;
+	    canForward1 = canBackward1 = true;
+	    special2 = fire2 = left2 = right2 = moveForward2 = moveBackward2 = false;
+	    canForward2 = canBackward2 = true;
 	    sx = sy = 2;
 	    bullet = new Weapon(0, 0, 0, 0, 0, null);
-	    bullets = player1.getBullets();
+
+	    
+
 	    reload = 30;
 	    numToShoot = 1;
 	    spread = 0;
@@ -72,23 +83,52 @@ public class Board extends JPanel implements Runnable
         if (powerup.isVisible())
         	g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
         		powerup.getHeight(), this);
-        
-        
 
-        // rotating the hero, rotation point is the middle of the square
+
+        // rotating the players, rotation point is the middle of the square
         g2d.rotate(player1.getDirection(), player1.getX() + player1.getWidth(),
               player1.getY() + player1.getHeight() / 2);
         
-        // draw the image
+        // draw the image of player 1
         g2d.drawImage(player1.getImage(), (int) player1.getX(), (int) player1.getY(),
               player1.getWidth(), player1.getHeight(), this);
         g2d.setTransform(old);
+        
+        // draw the image of player 2
+        g2d.rotate(player2.getDirection(), player2.getX() + player2.getWidth(),
+                player2.getY() + player2.getHeight() / 2);
+        g2d.drawImage(player2.getImage(), (int) player2.getX(), (int) player2.getY(),
+                player2.getWidth(), player2.getHeight(), this);
+        g2d.setTransform(old);
+        
+
+
 
         // drawing the bullets
-        ArrayList bullets = player1.getBullets();
-        for (int i = 0; i < bullets.size(); i++)
+        ArrayList bullets1 = player1.getBullets();
+        for (int i = 0; i < bullets1.size(); i++)
         {
-            Weapon tmpB = (Weapon) bullets.get(i);
+            Weapon tmpB = (Weapon) bullets1.get(i);
+            //playing with bullet colors
+            if (i % 2 == 0) 
+            {
+            	g2d.setColor(new Color(150, 130, 100));
+            } 
+            else 
+            {
+            	g2d.setColor(new Color(60, 20, 120));
+            }
+            g2d.fillRect((int) tmpB.getX(), (int) tmpB.getY(), tmpB.getWidth(),
+            		tmpB.getHeight());
+        }
+        // in case you have other things to rotate
+        g2d.setTransform(old);
+        
+        // drawing the bullets
+        ArrayList bullets2 = player2.getBullets();
+        for (int i = 0; i < bullets2.size(); i++)
+        {
+            Weapon tmpB = (Weapon) bullets2.get(i);
             //playing with bullet colors
             if (i % 2 == 0) 
             {
@@ -106,11 +146,23 @@ public class Board extends JPanel implements Runnable
     }
     public void checkCollisions()
     {
-    	Rectangle r3 = player1.getBounds();
-        Rectangle r2 = powerup.getBounds();
+    	Rectangle player1Rec = player1.getBounds();
+    	Rectangle player2Rec = player2.getBounds();
+        Rectangle powerupRec = powerup.getBounds();
+       
+      
             
-        if (r3.intersects(r2))
+        if (player1Rec.intersects(powerupRec))
+        {
+        	player1.updateWeapon(new MachineGun());
         	powerup.setVisible(false);
+        }
+        if (player2Rec.intersects(powerupRec))
+        {
+        	player2.updateWeapon(new MachineGun());
+        	powerup.setVisible(false);
+        }
+        
 
      }
     
@@ -138,79 +190,184 @@ public class Board extends JPanel implements Runnable
            player1.setY(2000);
         }
         
-        
 
-        // moving bullets
-        
-        	{
-                ArrayList<Weapon> tmpWs = player1.getBullets();
-                
-                for (int i = 0; i < tmpWs.size(); i++)
-                {
-                   Weapon tmpW = (Weapon) tmpWs.get(i);
+        // moving pistol bullets
+        if (player1.getWeapon() instanceof Pistol)
+        {
+            ArrayList<Weapon> tmpWs = player1.getBullets();
+            
+            for (int i = 0; i < tmpWs.size(); i++)
+            {
+               Weapon tmpW = (Weapon) tmpWs.get(i);
 
-                   tmpW.move();
+               tmpW.move();
+               System.out.println(player1.typeOfWeapon() + " " + tmpW.getX());
 
-                   if (tmpW.getX() > 2000 || tmpW.getX() < 0
-                         || tmpW.getY() > 2000 || tmpW.getY() < 0)
-                   {
-                      tmpWs.remove(i);
-                   }
-                }
-        		
-        	}
+               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+                     || tmpW.getY() > 2000 || tmpW.getY() < 0)
+               {
+                  tmpWs.remove(i);
+               }
+            }
+        }
         
+        // moving machinegun bullets
+        if (player1.getWeapon() instanceof MachineGun)
+        {
+            ArrayList<Weapon> tmpWs = player1.getBullets();
+            
+            for (int i = 0; i < tmpWs.size(); i++)
+            {
+               Weapon tmpW = (Weapon) tmpWs.get(i);
 
+               tmpW.move();
+               System.out.println(player1.typeOfWeapon() + " " + tmpW.getX());
+
+               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+                     || tmpW.getY() > 2000 || tmpW.getY() < 0)
+               {
+                  tmpWs.remove(i);
+               }
+            }
+        }
         
+        // moving pistol bullets
+        if (player2.getWeapon() instanceof Pistol)
+        {
+            ArrayList<Weapon> tmpWs = player2.getBullets();
+            
+            for (int i = 0; i < tmpWs.size(); i++)
+            {
+               Weapon tmpW = (Weapon) tmpWs.get(i);
+
+               tmpW.move();
+
+               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+                     || tmpW.getY() > 2000 || tmpW.getY() < 0)
+               {
+                  tmpWs.remove(i);
+               }
+            }
+        }
         
+        // moving machinegun bullets
+        if (player2.getWeapon() instanceof MachineGun)
+        {
+            ArrayList tmpWs = player2.getBullets();
+            
+            for (int i = 0; i < tmpWs.size(); i++)
+            {
+               Weapon tmpW = (Weapon) tmpWs.get(i);
+
+               tmpW.move();
+               System.out.println(player1.typeOfWeapon() + " " + tmpW.getX());
+
+               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+                     || tmpW.getY() > 2000 || tmpW.getY() < 0)
+               {
+                  tmpWs.remove(i);
+               }
+            }
+        }
+
         // check if shooting
-        if (fire)
+        if (fire1)
         {
            player1.fire(reload, numToShoot, spread);
         }
-        if (special)
+        if (special1)
         {
            player1.fire(5, 3, 2);
         }
 
         // changing the hero angle
-        if (left)
+        if (left1)
         {
-           tmpAngle -= 1;
+           tmpAngle1 -= 1;
         }
-        if (right)
+        if (right1)
         {
-           tmpAngle += 1;
+           tmpAngle1 += 1;
         }
 
         // setting the hero angle
-        player1.setDirection(tmpAngle);
+        player1.setDirection(tmpAngle1);
 
         // this is just to keep the angle between 0 and 360
-        if (tmpAngle > 360)
+        if (tmpAngle1 > 360)
         {
-           tmpAngle = 0;
+           tmpAngle1 = 0;
         }
-        else if (tmpAngle < 0)
+        else if (tmpAngle1 < 0)
         {
-           tmpAngle = 360;
-
+           tmpAngle1 = 360;
         }
 
         // moving the hero
-        if (moveForward)
+        if (moveForward1)
         {
-           if (canForward)
+           if (canForward1)
            {
               player1.moveForward(sx, sy);
            }
         }
         
-        if (moveBackward)
+        if (moveBackward1)
         {
-           if (canBackward)
+           if (canBackward1)
            {
               player1.moveBackward(sx, sy);
+           }
+        }
+        
+        checkCollisions();
+        
+        if (fire2)
+        {
+           player2.fire(reload, numToShoot, spread);
+        }
+        if (special2)
+        {
+           player2.fire(5, 3, 2);
+        }
+
+        // changing the hero angle
+        if (left2)
+        {
+           tmpAngle2 -= 1;
+        }
+        if (right2)
+        {
+           tmpAngle2 += 1;
+        }
+
+        // setting the hero angle
+        player2.setDirection(tmpAngle2);
+
+        // this is just to keep the angle between 0 and 360
+        if (tmpAngle2 > 360)
+        {
+           tmpAngle2 = 0;
+        }
+        else if (tmpAngle2 < 0)
+        {
+           tmpAngle2 = 360;
+        }
+
+        // moving the hero
+        if (moveForward2)
+        {
+           if (canForward2)
+           {
+              player2.moveForward(sx, sy);
+           }
+        }
+        
+        if (moveBackward2)
+        {
+           if (canBackward2)
+           {
+              player2.moveBackward(sx, sy);
            }
         }
         
@@ -227,26 +384,53 @@ public class Board extends JPanel implements Runnable
        {
            if (e.getKeyCode() == KeyEvent.VK_SPACE)
            {
-               fire = true;
+               fire1 = true;
            }
 
           if (e.getKeyCode() == e.VK_UP)
           {
-             moveForward = true;
+             moveForward1 = true;
           }
           if (e.getKeyCode() == e.VK_DOWN)
           {
-             moveBackward = true;
+             moveBackward1 = true;
           }
           
           if (e.getKeyCode() == e.VK_LEFT)
           {
-             left = true;
+             left1 = true;
           }
           if (e.getKeyCode() == e.VK_RIGHT)
           {
-             right = true;
+             right1 = true;
           }
+          
+          if (e.getKeyCode() == KeyEvent.VK_SPACE)
+          {
+              fire1 = true;
+          }
+
+         if (e.getKeyCode() == e.VK_W)
+         {
+            moveForward2 = true;
+         }
+         if (e.getKeyCode() == e.VK_S)
+         {
+            moveBackward2 = true;
+         }
+         
+         if (e.getKeyCode() == e.VK_A)
+         {
+            left2 = true;
+         }
+         if (e.getKeyCode() == e.VK_D)
+         {
+            right2 = true;
+         }
+         if (e.getKeyCode() == KeyEvent.VK_T)
+         {
+             fire2 = true;
+         }
 
        }
  
@@ -257,26 +441,51 @@ public class Board extends JPanel implements Runnable
        {
      	  if (e.getKeyCode() == KeyEvent.VK_SPACE)
            {
-               fire = false;
+               fire1 = false;
            }
 
           if (e.getKeyCode() == e.VK_UP)
           {
-             moveForward = false;
+             moveForward1 = false;
           }
           if (e.getKeyCode() == e.VK_DOWN)
           {
-             moveBackward = false;
+             moveBackward1 = false;
           }
           if (e.getKeyCode() == e.VK_LEFT)
           {
-             left = false;
+             left1 = false;
           }
           if (e.getKeyCode() == e.VK_RIGHT)
           {
-             right = false;
+             right1 = false;
+          }
+          
+     	  if (e.getKeyCode() == KeyEvent.VK_SPACE)
+          {
+              fire1 = false;
           }
 
+         if (e.getKeyCode() == e.VK_W)
+         {
+            moveForward2 = false;
+         }
+         if (e.getKeyCode() == e.VK_S)
+         {
+            moveBackward2 = false;
+         }
+         if (e.getKeyCode() == e.VK_A)
+         {
+            left2 = false;
+         }
+         if (e.getKeyCode() == e.VK_D)
+         {
+            right2 = false;
+         }
+    	 if (e.getKeyCode() == KeyEvent.VK_T)
+         {
+             fire2 = false;
+         }
        }
     }
     

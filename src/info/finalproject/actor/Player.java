@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import info.finalproject.gui.Board;
+import info.finalproject.weapon.MachineGun;
 import info.finalproject.weapon.Pistol;
 import info.finalproject.weapon.Weapon;
 
@@ -14,16 +15,18 @@ public class Player extends Actor
 	private int mySpeed;
 	private int tmpLoad;
 	private Weapon myWeapon;
-	private ArrayList<Weapon> bullets;
+	private ArrayList bullets;
 	private boolean moveForward, canForward, canBackward, moveBackward, left,
     right, fire, special;
 	
 	public Player(int x, int y, double degrees, int width, int height, String imageName, 
-			int speed, Weapon weapon)
+			int speed)
 	{
 		super(x, y, degrees, width, height, imageName);
 		myHealth = 100;
 		mySpeed = speed;
+		myWeapon = new Pistol(super.getX(), super.getY(), super.getDirection(),
+				super.getWidth(), super.getHeight(), null);
 		bullets = new ArrayList();
 		tmpLoad = 0;
 	}
@@ -77,11 +80,23 @@ public class Player extends Actor
               Board.bullet.setDirection(Math.toDegrees(super.getDirection()));
               Board.bullet.setWidth(10);
               Board.bullet.setHeight(10 );
+              
               // adding the bullet to the array list
-              bullets.add(new Weapon(Board.bullet.getX(),
-                      Board.bullet.getY(), Board.bullet.getDirection(), 
-                      Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
+              if (myWeapon instanceof Pistol)
+              {
+                  bullets.add(new Pistol(Board.bullet.getX(),
+                          Board.bullet.getY(), Board.bullet.getDirection(), 
+                          Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
+              }
+              if (myWeapon instanceof MachineGun)
+              {
+                  bullets.add(new MachineGun(Board.bullet.getX(),
+                          Board.bullet.getY(), Board.bullet.getDirection(), 
+                          Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
+              }
            }
+
+
            //reset the reload time 
            tmpLoad = load;
         }
@@ -89,7 +104,20 @@ public class Player extends Actor
         {
            tmpLoad -= 1;  
         }
+       
 
+    }
+    public void updateWeapon(Weapon weapon)
+    {
+    	myWeapon = weapon;
+    }
+    
+    public String typeOfWeapon()
+    {
+    	if (myWeapon instanceof Pistol)
+    		return "pistol";
+    	else
+    		return "machinegun";
     }
 
 
