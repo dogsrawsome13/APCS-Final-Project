@@ -227,60 +227,30 @@ public class Board extends JPanel implements Runnable
     private class Controll extends KeyAdapter 
     {
 
-       public void keyPressed(KeyEvent e)
-       {
+       public void keyPressed(KeyEvent e) {
            if (e.getKeyCode() == KeyEvent.VK_SPACE)
-           {
                fire = true;
-           }
-
           if (e.getKeyCode() == e.VK_UP)
-          {
              moveForward = true;
-          }
           if (e.getKeyCode() == e.VK_DOWN)
-          {
              moveBackward = true;
-          }
-          
           if (e.getKeyCode() == e.VK_LEFT)
-          {
              left = true;
-          }
           if (e.getKeyCode() == e.VK_RIGHT)
-          {
              right = true;
-          }
 
        }
- 
-
- 
-
-       public void keyReleased(KeyEvent e)
-       {
+       public void keyReleased(KeyEvent e){
      	  if (e.getKeyCode() == KeyEvent.VK_SPACE)
-           {
                fire = false;
-           }
-
           if (e.getKeyCode() == e.VK_UP)
-          {
              moveForward = false;
-          }
           if (e.getKeyCode() == e.VK_DOWN)
-          {
              moveBackward = false;
-          }
           if (e.getKeyCode() == e.VK_LEFT)
-          {
              left = false;
-          }
           if (e.getKeyCode() == e.VK_RIGHT)
-          {
              right = false;
-          }
-
        }
     } //end private class
     
