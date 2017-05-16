@@ -7,8 +7,7 @@ import info.finalproject.gui.*;
 public class Application extends JFrame
 {
 	
-	  public Application()
-	   {
+	  public Application() {
 
 	      add(new Board());
 
@@ -19,8 +18,7 @@ public class Application extends JFrame
 	      setVisible(true);
 	   }
 	  
-	  public static void main(String[] args)
-	   {
+	  public static void main(String[] args) {
 	      new Application();
 	   }
     

@@ -18,8 +18,7 @@ import info.finalproject.actor.Powerup;
 import info.finalproject.weapon.Pistol;
 import info.finalproject.weapon.Weapon;
 
-public class Board extends JPanel implements Runnable
-{ 
+public class Board extends JPanel implements Runnable { 
 	  public static Weapon bullet;
 
 	  private Thread loop; // the loop
@@ -31,8 +30,7 @@ public class Board extends JPanel implements Runnable
 	         right, fire, special;
 
 	
-	public Board()
-	{
+	public Board() {
 		initBoard();
 	    addKeyListener(new Controll());
 	    setFocusable(true);
@@ -41,8 +39,7 @@ public class Board extends JPanel implements Runnable
 	    setFocusable(true);
 	}
 	
-	private void initBoard()
-	{
+	private void initBoard() {
 	    player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
 	    		new Pistol(400, 300, 0, 50, 50, "pistol.png"));
 	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
@@ -57,12 +54,10 @@ public class Board extends JPanel implements Runnable
 	    spread = 0;
 
 	    loop = new Thread(this);
-	    loop.start();
-		
+	    loop.start();	
 	}
 	
-    public void paint(Graphics g)
-    {        
+    public void paint(Graphics g) {        
         super.paint(g);
 
         Graphics2D g2d = (Graphics2D) g;
@@ -87,30 +82,24 @@ public class Board extends JPanel implements Runnable
 
         // drawing the bullets
         ArrayList<Weapon> bullets = player1.getBullets();
-        for (int i = 0; i < bullets.size(); i++)
-        {
+        for (int i = 0; i < bullets.size(); i++) {
             Weapon tmpB = (Weapon) bullets.get(i);
             //playing with bullet colors
             if (i % 2 == 0) 
-            {
             	g2d.setColor(new Color(150, 130, 100));
-            } 
             else 
-            {
             	g2d.setColor(new Color(60, 20, 120));
-            }
             g2d.fillRect((int) tmpB.getX(), (int) tmpB.getY(), tmpB.getWidth(),
             		tmpB.getHeight());
         }
         // in case you have other things to rotate
         g2d.setTransform(old);
     }
-    public void checkCollisions()
-    {
+    public void checkCollisions() {
     	Rectangle r3 = player1.getBounds();
         Rectangle r2 = powerup.getBounds();
             
-        if (r3.intersects(r2)){
+        if (r3.intersects(r2)) {
         	powerup.setVisible(false);
         	Actor powerupItem = powerup.givePowerup();
         	if(powerupItem instanceof Weapon)
@@ -119,28 +108,19 @@ public class Board extends JPanel implements Runnable
      }
     
 
-    public void play()
-    {
+    public void play() {
 
         // if the hero get off the screen
         // we make it appear from the opposite side of the screen
         if (player1.getX() > 2000)
-        {
            player1.setX(0);
-        }
         else if (player1.getX() < -100)
-        {
            player1.setX(2000);
-        }
 
         if (player1.getY() > 2000)
-        {
            player1.setY(0);
-        }
         else if (player1.getY() < -100)
-        {
            player1.setY(2000);
-        }
         
         
 
@@ -149,17 +129,14 @@ public class Board extends JPanel implements Runnable
         	{
                 ArrayList<Weapon> tmpWs = player1.getBullets();
                 
-                for (int i = 0; i < tmpWs.size(); i++)
-                {
+                for (int i = 0; i < tmpWs.size(); i++) {
                    Weapon tmpW = (Weapon) tmpWs.get(i);
 
                    tmpW.move();
 
                    if (tmpW.getX() > 2000 || tmpW.getX() < 0
                          || tmpW.getY() > 2000 || tmpW.getY() < 0)
-                   {
                       tmpWs.remove(i);
-                   }
                 }
         		
         	}
@@ -169,54 +146,33 @@ public class Board extends JPanel implements Runnable
         
         // check if shooting
         if (fire)
-        {
            player1.fire(reload, numToShoot, spread);
-        }
         if (special)
-        {
            player1.fire(5, 3, 2);
-        }
 
         // changing the hero angle
         if (left)
-        {
            tmpAngle -= 1;
-        }
         if (right)
-        {
            tmpAngle += 1;
-        }
 
         // setting the hero angle
         player1.setDirection(tmpAngle);
 
         // this is just to keep the angle between 0 and 360
         if (tmpAngle > 360)
-        {
            tmpAngle = 0;
-        }
         else if (tmpAngle < 0)
-        {
            tmpAngle = 360;
-
-        }
 
         // moving the hero
         if (moveForward)
-        {
            if (canForward)
-           {
               player1.moveForward(sx, sy);
-           }
-        }
         
         if (moveBackward)
-        {
            if (canBackward)
-           {
               player1.moveBackward(sx, sy);
-           }
-        }
         
         checkCollisions();
         System.out.println(player1.toString());
@@ -224,8 +180,7 @@ public class Board extends JPanel implements Runnable
     
     // game key controll
 
-    private class Controll extends KeyAdapter 
-    {
+    private class Controll extends KeyAdapter {
 
        public void keyPressed(KeyEvent e) {
            if (e.getKeyCode() == KeyEvent.VK_SPACE)
@@ -238,9 +193,9 @@ public class Board extends JPanel implements Runnable
              left = true;
           if (e.getKeyCode() == e.VK_RIGHT)
              right = true;
-
        }
-       public void keyReleased(KeyEvent e){
+       
+       public void keyReleased(KeyEvent e) {
      	  if (e.getKeyCode() == KeyEvent.VK_SPACE)
                fire = false;
           if (e.getKeyCode() == e.VK_UP)
@@ -255,26 +210,18 @@ public class Board extends JPanel implements Runnable
     } //end private class
     
 	@Override
-	public void run() 
-	{
+	public void run() {
 		
-		while (true)
-	      {
+		while (true) {
 	         repaint();
 	         play();
-	         try
-	         {
+	         try {
 	            Thread.sleep(5);
 	         }
-	         catch (InterruptedException e)
-	         {
+	         catch (InterruptedException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	         }
-
 	      }
-
-		
 	}
-
 }
