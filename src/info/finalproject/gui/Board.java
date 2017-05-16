@@ -21,11 +21,6 @@ import info.finalproject.weapon.Weapon;
 public class Board extends JPanel implements Runnable
 { 
 	  public static Weapon bullet;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 77c951c58e3fc8409c58f643b2c3cf2bfe83c86c
 	  private Thread loop; // the loop
 	  private Player player1;
 	  private Player player2;
@@ -51,7 +46,6 @@ public class Board extends JPanel implements Runnable
 	
 	private void initBoard()
 	{
-<<<<<<< HEAD
 	    player1 = new Player(400, 300, 0, 75, 75, "images/Shooter.png", 30);
 	    player2 = new Player(400, 300, 0, 75, 75, "images/Shooter.png", 30);
 	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
@@ -61,15 +55,7 @@ public class Board extends JPanel implements Runnable
 	    canForward1 = canBackward1 = true;
 	    special2 = fire2 = left2 = right2 = moveForward2 = moveBackward2 = false;
 	    canForward2 = canBackward2 = true;
-=======
-	    player1 = new Player(400, 300, 0, 75, 75, "images/Shooter.png", 30,
-	    		new Pistol(400, 300, 0, 50, 50, "images/pistol.png"));
-	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
-	    
-	    tmpAngle = 0;
-	    special = fire = left = right = moveForward = moveBackward = false;
-	    canForward = canBackward = true;
->>>>>>> 77c951c58e3fc8409c58f643b2c3cf2bfe83c86c
+
 	    sx = sy = 2;
 	    bullet = new Weapon(0, 0, 0, 0, 0, null);
 
@@ -204,7 +190,6 @@ public class Board extends JPanel implements Runnable
         }
         
 
-<<<<<<< HEAD
         // moving pistol bullets
         if (player1.getWeapon() instanceof Pistol)
         {
@@ -244,27 +229,7 @@ public class Board extends JPanel implements Runnable
                }
             }
         }
-=======
-        // moving bullets
-       // if (player1.getWeapon() instanceof Pistol)
-        {
-        	ArrayList<Weapon> tmpWs = player1.getBullets();
-               
-            for (int i = 0; i < tmpWs.size(); i++)
-            {
-            	Weapon tmpW = (Weapon) tmpWs.get(i);
 
-                tmpW.move();
-
-                if (tmpW.getX() > 2000 || tmpW.getX() < 0
-                      || tmpW.getY() > 2000 || tmpW.getY() < 0)
-                {
-                   tmpWs.remove(i);
-                }
-             }
-        		
-     	}
->>>>>>> 77c951c58e3fc8409c58f643b2c3cf2bfe83c86c
         
         // moving pistol bullets
         if (player2.getWeapon() instanceof Pistol)

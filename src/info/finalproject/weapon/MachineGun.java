@@ -22,7 +22,6 @@ public class MachineGun extends Weapon{
 		myAttack = 8;
 		mySpeed = 12;
 	}
-<<<<<<< HEAD
 	public void setAttack(int attack)
 	{
 		myAttack = attack;
@@ -34,13 +33,4 @@ public class MachineGun extends Weapon{
 	    super.setY(super.getY() + (int) (Math.sin(super.getDirection()) * mySpeed));
 	}
 
-=======
-
-    public void move(){
-        super.setX(super.getX() + mySpeed);
-        
-        if (super.getX() > super.getBoardWidth())
-            super.setVisible(false);
-    }
->>>>>>> 77c951c58e3fc8409c58f643b2c3cf2bfe83c86c
 }

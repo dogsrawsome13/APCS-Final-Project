@@ -20,8 +20,5 @@ public class Pistol extends Weapon{
 		super.setX(super.getX() + (int) (Math.cos(super.getDirection()) * mySpeed));
 	    super.setY(super.getY() + (int) (Math.sin(super.getDirection()) * mySpeed));
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> 77c951c58e3fc8409c58f643b2c3cf2bfe83c86c
+
 }
