@@ -18,8 +18,7 @@ import info.finalproject.weapon.MachineGun;
 import info.finalproject.weapon.Pistol;
 import info.finalproject.weapon.Weapon;
 
-public class Board extends JPanel implements Runnable
-{ 
+public class Board extends JPanel implements Runnable{ 
 	  public static Weapon bullet;
 	  private Thread loop; // the loop
 	  private Player player1;
@@ -34,8 +33,7 @@ public class Board extends JPanel implements Runnable
 	 
 
 	
-	public Board()
-	{
+	public Board(){
 		initBoard();
 	    addKeyListener(new Controll());
 	    setFocusable(true);
@@ -44,8 +42,7 @@ public class Board extends JPanel implements Runnable
 	    setFocusable(true);
 	}
 	
-	private void initBoard()
-	{
+	private void initBoard(){
 	    player1 = new Player(400, 300, 0, 75, 75, "images/Shooter.png", 30);
 	    player2 = new Player(400, 300, 0, 75, 75, "images/Shooter.png", 30);
 	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
@@ -59,8 +56,6 @@ public class Board extends JPanel implements Runnable
 	    sx = sy = 2;
 	    bullet = new Weapon(0, 0, 0, 0, 0, null);
 
-	    
-
 	    reload = 30;
 	    numToShoot = 1;
 	    spread = 0;
@@ -70,8 +65,7 @@ public class Board extends JPanel implements Runnable
 		
 	}
 	
-    public void paint(Graphics g)
-    {        
+    public void paint(Graphics g){        
         super.paint(g);
 
         Graphics2D g2d = (Graphics2D) g;
@@ -105,8 +99,7 @@ public class Board extends JPanel implements Runnable
 
         // drawing the bullets
         ArrayList bullets1 = player1.getBullets();
-        for (int i = 0; i < bullets1.size(); i++)
-        {
+        for (int i = 0; i < bullets1.size(); i++){
             Weapon tmpB = (Weapon) bullets1.get(i);
             //playing with bullet colors
             if (i % 2 == 0) 
@@ -143,182 +136,141 @@ public class Board extends JPanel implements Runnable
         // in case you have other things to rotate
         g2d.setTransform(old);
     }
-    public void checkCollisions()
-    {
+    public void checkCollisions(){
     	Rectangle player1Rec = player1.getBounds();
     	Rectangle player2Rec = player2.getBounds();
         Rectangle powerupRec = powerup.getBounds();
-       
-      
             
-        if (player1Rec.intersects(powerupRec))
-        {
+        if (player1Rec.intersects(powerupRec)){
         	player1.updateWeapon(new MachineGun());
         	powerup.setVisible(false);
         }
-        if (player2Rec.intersects(powerupRec))
-        {
+        if (player2Rec.intersects(powerupRec)){
         	player2.updateWeapon(new MachineGun());
         	powerup.setVisible(false);
         }
-        
-
      }
-    
 
-    public void play()
-    {
-
+    public void play(){
         // if the hero get off the screen
         // we make it appear from the opposite side of the screen
-        if (player1.getX() > 3000)
-        {
+        if (player1.getX() > 3000){
            player1.setX(0);
         }
-        else if (player1.getX() < -100)
-        {
+        else if (player1.getX() < -100){
            player1.setX(3000);
         }
 
-        if (player1.getY() > 1800)
-        {
+        if (player1.getY() > 1800){
            player1.setY(0);
         }
-        else if (player1.getY() < -100)
-        {
+        else if (player1.getY() < -100){
            player1.setY(1800);
         }
         
 
         // moving pistol bullets
-        if (player1.getWeapon() instanceof Pistol)
-        {
+        if (player1.getWeapon() instanceof Pistol) {
             ArrayList<Weapon> tmpWs = player1.getBullets();
             
-            for (int i = 0; i < tmpWs.size(); i++)
-            {
+            for (int i = 0; i < tmpWs.size(); i++) {
                Weapon tmpW = (Weapon) tmpWs.get(i);
 
                tmpW.move();
                System.out.println(player1.typeOfWeapon() + " " + tmpW.getX());
 
-               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+               if (tmpW.getX() > 4000 || tmpW.getX() < 0
                      || tmpW.getY() > 2000 || tmpW.getY() < 0)
-               {
-                  tmpWs.remove(i);
-               }
+            	   tmpWs.remove(i);
+               
             }
         }
         
         // moving machinegun bullets
-        if (player1.getWeapon() instanceof MachineGun)
-        {
+        if (player1.getWeapon() instanceof MachineGun){
             ArrayList<Weapon> tmpWs = player1.getBullets();
             
-            for (int i = 0; i < tmpWs.size(); i++)
-            {
+            for (int i = 0; i < tmpWs.size(); i++){
                Weapon tmpW = (Weapon) tmpWs.get(i);
 
                tmpW.move();
                System.out.println(player1.typeOfWeapon() + " " + tmpW.getX());
 
-               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+               if (tmpW.getX() > 4000 || tmpW.getX() < 0
                      || tmpW.getY() > 2000 || tmpW.getY() < 0)
-               {
-                  tmpWs.remove(i);
-               }
+            	   tmpWs.remove(i);
+               
             }
         }
 
         
         // moving pistol bullets
-        if (player2.getWeapon() instanceof Pistol)
-        {
+        if (player2.getWeapon() instanceof Pistol){
             ArrayList<Weapon> tmpWs = player2.getBullets();
             
-            for (int i = 0; i < tmpWs.size(); i++)
-            {
+            for (int i = 0; i < tmpWs.size(); i++){
                Weapon tmpW = (Weapon) tmpWs.get(i);
 
                tmpW.move();
 
-               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+               if (tmpW.getX() > 4000 || tmpW.getX() < 0
                      || tmpW.getY() > 2000 || tmpW.getY() < 0)
-               {
-                  tmpWs.remove(i);
-               }
+            	   tmpWs.remove(i); 
             }
         }
         
         // moving machinegun bullets
-        if (player2.getWeapon() instanceof MachineGun)
-        {
+        if (player2.getWeapon() instanceof MachineGun){
             ArrayList tmpWs = player2.getBullets();
             
-            for (int i = 0; i < tmpWs.size(); i++)
-            {
+            for (int i = 0; i < tmpWs.size(); i++){
                Weapon tmpW = (Weapon) tmpWs.get(i);
 
                tmpW.move();
                System.out.println(player1.typeOfWeapon() + " " + tmpW.getX());
 
-               if (tmpW.getX() > 2000 || tmpW.getX() < 0
+               if (tmpW.getX() > 4000 || tmpW.getX() < 0
                      || tmpW.getY() > 2000 || tmpW.getY() < 0)
-               {
-                  tmpWs.remove(i);
-               }
+            	   tmpWs.remove(i);   
             }
         }
 
         // check if shooting
         if (fire1)
-        {
-           player1.fire(reload, numToShoot, spread);
-        }
+        	player1.fire(reload, numToShoot, spread);
+        
         if (special1)
-        {
-           player1.fire(5, 3, 2);
-        }
+        	player1.fire(5, 3, 2);
+        
 
         // changing the hero angle
         if (left1)
-        {
            tmpAngle1 -= 1;
-        }
         if (right1)
-        {
            tmpAngle1 += 1;
-        }
+        
 
         // setting the hero angle
         player1.setDirection(tmpAngle1);
 
         // this is just to keep the angle between 0 and 360
         if (tmpAngle1 > 360)
-        {
            tmpAngle1 = 0;
-        }
+        
         else if (tmpAngle1 < 0)
-        {
            tmpAngle1 = 360;
-        }
+        
 
         // moving the hero
         if (moveForward1)
-        {
            if (canForward1)
-           {
               player1.moveForward(sx, sy);
-           }
-        }
+          
         
         if (moveBackward1)
-        {
            if (canBackward1)
-           {
-              player1.moveBackward(sx, sy);
-           }
-        }
+        	   player1.moveBackward(sx, sy);
+           
         
         checkCollisions();
         

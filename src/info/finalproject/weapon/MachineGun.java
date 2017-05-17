@@ -5,8 +5,7 @@ public class MachineGun extends Weapon{
 	private int myAttack;
     private int mySpeed;
     
-	public MachineGun()
-	{
+	public MachineGun(){
 		super(0, 0, 0, 0, 0, null);
 		super.setX(super.getX());
 		super.setY(super.getY());
@@ -22,13 +21,11 @@ public class MachineGun extends Weapon{
 		myAttack = 8;
 		mySpeed = 12;
 	}
-	public void setAttack(int attack)
-	{
+	public void setAttack(int attack){
 		myAttack = attack;
 	}
 	
-	public void move()
-	{
+	public void move(){
 		super.setX(super.getX() + (int) (Math.cos(super.getDirection()) * mySpeed));
 	    super.setY(super.getY() + (int) (Math.sin(super.getDirection()) * mySpeed));
 	}

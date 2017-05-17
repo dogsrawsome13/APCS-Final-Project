@@ -20,8 +20,7 @@ public class Player extends Actor
     right, fire, special;
 	
 	public Player(int x, int y, double degrees, int width, int height, String imageName, 
-			int speed)
-	{
+			int speed){
 		super(x, y, degrees, width, height, imageName);
 		myHealth = 100;
 		mySpeed = speed;
@@ -31,49 +30,40 @@ public class Player extends Actor
 		tmpLoad = 0;
 	}
 	
-	public int getHealth()
-	{
+	public int getHealth(){
 		return myHealth;
 	}
 	
-	public int getSpeed()
-	{
+	public int getSpeed(){
 		return mySpeed;
 	}
 	
-	public Weapon getWeapon()
-	{
+	public Weapon getWeapon(){
 		return myWeapon;
 	}
 	
 
-    public ArrayList<Weapon> getBullets()
-    {
+    public ArrayList<Weapon> getBullets(){
     	return bullets;
     }
 	
-    public void moveForward(int sx, int sy)
-    {
+    public void moveForward(int sx, int sy){
         super.setX(super.getX() + Math.cos(super.getDirection()) * sx);
         super.setY(super.getY() + Math.sin(super.getDirection()) * sy);
     }
-    public void moveBackward(int sx, int sy)
-    {
+    public void moveBackward(int sx, int sy){
     	super.setX(super.getX() - Math.cos(super.getDirection()) * sx);
         super.setY(super.getY() - Math.sin(super.getDirection()) * sy);
     }
 
     
     
-    public void fire(int load, int number, int spread)
-    {
+    public void fire(int load, int number, int spread){
         
         // if reloading time is done
-        if (tmpLoad == 0)
-        { 
+        if (tmpLoad == 0){ 
 
-           for (int i = 0; i < number; i++)
-           {
+           for (int i = 0; i < number; i++){
               // setting the bullet
               Board.bullet.setX(super.getX() + super.getWidth());
               Board.bullet.setY(super.getY() + super.getHeight() / 2);
@@ -82,14 +72,12 @@ public class Player extends Actor
               Board.bullet.setHeight(10 );
               
               // adding the bullet to the array list
-              if (myWeapon instanceof Pistol)
-              {
+              if (myWeapon instanceof Pistol){
                   bullets.add(new Pistol(Board.bullet.getX(),
                           Board.bullet.getY(), Board.bullet.getDirection(), 
                           Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
               }
-              if (myWeapon instanceof MachineGun)
-              {
+              if (myWeapon instanceof MachineGun){
                   bullets.add(new MachineGun(Board.bullet.getX(),
                           Board.bullet.getY(), Board.bullet.getDirection(), 
                           Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
@@ -101,19 +89,16 @@ public class Player extends Actor
            tmpLoad = load;
         }
         else 
-        {
-           tmpLoad -= 1;  
-        }
+        	tmpLoad -= 1;  
+        
        
 
     }
-    public void updateWeapon(Weapon weapon)
-    {
+    public void updateWeapon(Weapon weapon){
     	myWeapon = weapon;
     }
     
-    public String typeOfWeapon()
-    {
+    public String typeOfWeapon(){
     	if (myWeapon instanceof Pistol)
     		return "pistol";
     	else
