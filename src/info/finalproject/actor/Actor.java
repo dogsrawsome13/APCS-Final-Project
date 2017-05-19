@@ -3,6 +3,8 @@ package info.finalproject.actor;
 import java.awt.*;
 import javax.swing.*;
 
+import info.finalproject.gui.*;
+
 public class Actor {
 	private int myHeight;
 	private int myWidth;
@@ -11,8 +13,9 @@ public class Actor {
 	private double myDegrees;
 	private boolean visible;
 	private Image myImage;
+	private Board myBoard;
 	
-	public Actor(double x, double y, double degrees, int width, int height, String imageName) {
+	public Actor(double x, double y, double degrees, int width, int height, String imageName, Board board) {
 		myX = x;
 		myY = y;
 		myDegrees = degrees;
@@ -20,6 +23,7 @@ public class Actor {
 		myWidth = height;
 		visible = true;
 		loadImage(imageName);
+		myBoard = board;
 	}
 	
 	public void loadImage(String imageName) {
@@ -93,6 +97,10 @@ public class Actor {
     
     public String toString() {
     	return myX + "," + myY;
+    }
+    
+    public Board getBoard() {
+    	return myBoard;
     }
 }
     

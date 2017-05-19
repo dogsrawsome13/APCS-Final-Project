@@ -41,13 +41,13 @@ public class Board extends JPanel implements Runnable {
 	
 	private void initBoard() {
 	    player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
-	    		new Pistol(400, 300, 0, 50, 50, "pistol.png"));
-	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png");
+	    		new Pistol(400, 300, 0, 50, 50, "pistol.png", this), this);
+	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png", this);
 	    tmpAngle = 0;
 	    special = fire = left = right = moveForward = moveBackward = false;
 	    canForward = canBackward = true;
 	    sx = sy = 2;
-	    bullet = new Weapon(0, 0, 0, 0, 0, null);
+	    bullet = new Weapon(0, 0, 0, 0, 0, null, null);
 	    bullets = player1.getBullets();
 	    reload = 30;
 	    numToShoot = 1;
@@ -95,16 +95,28 @@ public class Board extends JPanel implements Runnable {
         // in case you have other things to rotate
         g2d.setTransform(old);
     }
-    public void checkCollisions() {
-    	Rectangle r3 = player1.getBounds();
-        Rectangle r2 = powerup.getBounds();
+    
+    public boolean checkCollisions(Actor a1, Actor a2) {
+    	Rectangle r1 = a1.getBounds();
+        Rectangle r2 = a2.getBounds();
             
-        if (r3.intersects(r2)) {
-        	powerup.setVisible(false);
-        	Actor powerupItem = powerup.givePowerup();
-        	if(powerupItem instanceof Weapon)
+        if (r1.intersects(r2)) {
+        	Actor powerupItem = null;
+        	if(a1 != player1 && a1 instanceof Powerup)
+        		powerupItem = ((Powerup) a1).givePowerup();
+        	if(a2 != player1 && a2 instanceof Powerup)
+        		powerupItem = ((Powerup) a2).givePowerup();
+        	if(powerupItem != null && powerupItem instanceof Weapon)
         		player1.setWeapon((Weapon) powerupItem);
+        	if(a1 instanceof Player && a2 instanceof Player)
+        		return false;
+        	if((a1 instanceof Powerup && a2 instanceof Weapon) || (a1 instanceof Weapon && a2 instanceof Powerup))
+        		return false;
+        	if(a1 instanceof Weapon && a2 instanceof Weapon)
+        		return false;
+        	return true;
         }
+        return false;
      }
     
 
@@ -174,7 +186,12 @@ public class Board extends JPanel implements Runnable {
            if (canBackward)
               player1.moveBackward(sx, sy);
         
-        checkCollisions();
+        if(checkCollisions(player1, powerup)){
+        	Actor powerupItem = powerup.givePowerup();
+        	if(powerupItem instanceof Weapon)
+        		player1.setWeapon((Weapon) powerupItem);
+        	powerup.removeSelf();
+        }
         System.out.println(player1.toString());
      }
     
@@ -223,5 +240,10 @@ public class Board extends JPanel implements Runnable {
 	            e.printStackTrace();
 	         }
 	      }
+	}
+	public ArrayList<Actor> getActors() {
+		ArrayList<Actor> actors = new ArrayList<Actor>();
+		
+		return actors;
 	}
 }

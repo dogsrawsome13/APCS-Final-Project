@@ -1,19 +1,21 @@
 package info.finalproject.weapon;
 
+import info.finalproject.gui.*;
+
 public class MachineGun extends Weapon {
 	
 	private int myAttack;
     private int mySpeed;
     
 	public MachineGun() {
-		super(0, 0, 0, 0, 0, null);
+		super(0, 0, 0, 0, 0, null, null);
 		myAttack = 8;
 		mySpeed = 12;
 	}
 	
 	public MachineGun(double x, double y, double direction, int width, 
-			int height, String imageName) {
-		super(x, y, direction, width, height, imageName);
+			int height, String imageName, Board board) {
+		super(x, y, direction, width, height, imageName, board);
 		myAttack = 8;
 		mySpeed = 12;
 	}

@@ -18,8 +18,8 @@ public class Player extends Actor {
     right, fire, special;
 	
 	public Player(int x, int y, double degrees, int width, int height, String imageName, 
-			int speed, Weapon weapon) {
-		super(x, y, degrees, width, height, imageName);
+			int speed, Weapon weapon, Board board) {
+		super(x, y, degrees, width, height, imageName, board);
 		myHealth = 100;
 		mySpeed = speed;
 		bullets = new ArrayList<Weapon>();
@@ -70,7 +70,7 @@ public class Player extends Actor {
               Board.bullet.setHeight(10);
               // adding the bullet to the array list
               bullets.add(new Weapon(Board.bullet.getX(), Board.bullet.getY(), Board.bullet.getDirection(), 
-                      Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png"));
+                      Board.bullet.getWidth(), Board.bullet.getHeight(), "images/missile.png", getBoard()));
            }
            //reset the reload time 
            tmpLoad = load;

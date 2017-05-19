@@ -12,7 +12,7 @@ public class Application extends JFrame
 	      add(new Board());
 
 	      setTitle("Application");
-	      setSize(1000, 1000);
+	      setSize(1920, 1080);
 	      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	      setResizable(true);
 	      setVisible(true);

@@ -1,20 +1,25 @@
 package info.finalproject.weapon;
 
+import java.awt.*;
+
+import info.finalproject.actor.*;
+import info.finalproject.gui.*;
+
 public class RPG extends Weapon {
 	
 	private int myAttack;
     private int mySpeed;
     
 	public RPG() {
-		super(0, 0, 0, 0, 0, null);
+		super(0, 0, 0, 0, 0, null, null);
 		myAttack = 20;
-		mySpeed = 7;
+		mySpeed = 5;
 	}
 	public RPG(double x, double y, double direction, int width, 
-			int height, String imageName) {
-		super(x, y, direction, width, height, imageName);
+			int height, String imageName, Board board) {
+		super(x, y, direction, width, height, imageName, board);
 		myAttack = 8;
-		mySpeed = 12;
+		mySpeed = 5;
 	}
 
     public void move() {
@@ -25,5 +30,13 @@ public class RPG extends Weapon {
     }
     public String toString() {
     	return "RPG";
+    }
+    public void explode(Player player) {
+    	for(Actor actor: getBoard().getActors()) {
+    		
+    	if(getBoard().checkCollisions(player, actor)) {
+    		
+    	}
+    	}
     }
 }
