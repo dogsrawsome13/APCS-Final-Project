@@ -37,6 +37,7 @@ public class Board extends JPanel implements Runnable {
 	    setBackground(Color.WHITE);
 	    setDoubleBuffered(true);
 	    setFocusable(true);
+
 	}
 	
 	private void initBoard() {
@@ -64,6 +65,9 @@ public class Board extends JPanel implements Runnable {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
               RenderingHints.VALUE_ANTIALIAS_ON);
         AffineTransform old = g2d.getTransform();
+        
+        g2d.drawString("" + player1.getHealth(), (int) player1.getX() + 10, (int) player1.getY() - 50);
+
         
         if (powerup.isVisible())
         	g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
@@ -94,6 +98,12 @@ public class Board extends JPanel implements Runnable {
         }
         // in case you have other things to rotate
         g2d.setTransform(old);
+        
+        
+        
+
+        
+        		
     }
     
     public boolean checkCollisions(Actor a1, Actor a2) {
@@ -124,10 +134,10 @@ public class Board extends JPanel implements Runnable {
 
         // if the hero get off the screen
         // we make it appear from the opposite side of the screen
-        if (player1.getX() > 2000)
+        if (player1.getX() > 3000)
            player1.setX(0);
         else if (player1.getX() < -100)
-           player1.setX(2000);
+           player1.setX(3000);
 
         if (player1.getY() > 2000)
            player1.setY(0);
@@ -137,20 +147,13 @@ public class Board extends JPanel implements Runnable {
         
 
         // moving bullets
-        
-        	{
-                ArrayList<Weapon> tmpWs = player1.getBullets();
-                
-                for (int i = 0; i < tmpWs.size(); i++) {
-                   Weapon tmpW = (Weapon) tmpWs.get(i);
-
-                   tmpW.move();
-
-                   if (tmpW.getX() > 2000 || tmpW.getX() < 0
+        ArrayList<Weapon> tmpWs = player1.getBullets();
+        for (int i = 0; i < tmpWs.size(); i++) {
+        	Weapon tmpW = (Weapon) tmpWs.get(i);
+        	tmpW.move();
+        	if (tmpW.getX() > 3500 || tmpW.getX() < 0
                          || tmpW.getY() > 2000 || tmpW.getY() < 0)
-                      tmpWs.remove(i);
-                }
-        		
+        		tmpWs.remove(i);
         	}
         
 
