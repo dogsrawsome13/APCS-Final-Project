@@ -31,6 +31,10 @@ public class Player extends Actor {
 		return myHealth;
 	}
 	
+	public void loseHealth(int weaponType) {
+		myHealth = myHealth - weaponType;
+	}
+	
 	public int getSpeed() {
 		return mySpeed;
 	}
