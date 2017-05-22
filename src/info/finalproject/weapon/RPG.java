@@ -7,19 +7,18 @@ import info.finalproject.gui.*;
 
 public class RPG extends Weapon {
 	
-	private int myAttack;
     private int mySpeed;
     
 	public RPG() {
 		super(0, 0, 0, 0, 0, null, null);
-		myAttack = 20;
-		mySpeed = 5;
+		super.setAttack(20);
+		mySpeed = 1;
 	}
 	public RPG(double x, double y, double direction, int width, 
 			int height, String imageName, Board board) {
 		super(x, y, direction, width, height, imageName, board);
-		myAttack = 8;
-		mySpeed = 5;
+		super.setAttack(20);
+		mySpeed = 1;
 	}
 
     public void move() {
@@ -32,10 +31,11 @@ public class RPG extends Weapon {
     	return "RPG";
     }
     public void explode(Player player) {
+    	
     	for(Actor actor: getBoard().getActors()) {
     		
     	if(getBoard().checkCollisions(player, actor)) {
-    		
+    		hit(player);
     	}
     	}
     }
