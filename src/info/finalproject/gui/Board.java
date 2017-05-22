@@ -66,6 +66,9 @@ public class Board extends JPanel implements Runnable {
               RenderingHints.VALUE_ANTIALIAS_ON);
         AffineTransform old = g2d.getTransform();
         
+        g2d.drawString("" + player1.getHealth(), (int) player1.getX() + 10, (int) player1.getY() - 50);
+
+        
         if (powerup.isVisible())
         	g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
         		powerup.getHeight(), this);
@@ -96,7 +99,7 @@ public class Board extends JPanel implements Runnable {
         // in case you have other things to rotate
         g2d.setTransform(old);
         
-        g2d.drawString("" + player1.getHealth(), (int) player1.getX() + 10, (int) player1.getY() - 50);
+        
         
 
         
