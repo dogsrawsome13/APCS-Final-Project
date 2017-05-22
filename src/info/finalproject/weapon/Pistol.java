@@ -6,12 +6,11 @@ import info.finalproject.gui.*;
 
 public class Pistol extends Weapon {
 	
-	private int myAttack;
     private int mySpeed;
 
     public Pistol(double x, double y, double direction, int w, int h, String imageName, Board board) {
     	super(x, y, direction, w, h, imageName, board);
-    	myAttack = 10;
+    	super.setAttack(10);
     	mySpeed = 10;
     	super.setHeight(10);
     	super.setWidth(10);
