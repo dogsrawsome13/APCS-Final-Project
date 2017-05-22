@@ -247,8 +247,14 @@ public class Board extends JPanel implements Runnable {
 	      }
 	}
 	public ArrayList<Actor> getActors() {
-		ArrayList<Actor> actors = new ArrayList<Actor>();
 		
+		ArrayList<Actor> actors = new ArrayList<Actor>();
+		actors.add(player1);
+		actors.add(powerup);
+		for(Weapon bullet: bullets) {
+			actors.add(bullet);
+		}
 		return actors;
+		
 	}
 }
