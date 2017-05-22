@@ -148,14 +148,12 @@ public class Board extends JPanel implements Runnable {
 
         // moving bullets
         ArrayList<Weapon> tmpWs = player1.getBullets();
-                
         for (int i = 0; i < tmpWs.size(); i++) {
         	Weapon tmpW = (Weapon) tmpWs.get(i);
         	tmpW.move();
         	if (tmpW.getX() > 3500 || tmpW.getX() < 0
                          || tmpW.getY() > 2000 || tmpW.getY() < 0)
         		tmpWs.remove(i);
-                
         	}
         
 
