@@ -85,7 +85,7 @@ public class Board extends JPanel implements Runnable {
         
 
         // rotating player1, rotation point is the middle of the square
-        g2d.rotate(player1.getDirection(), player1.getX() + player1.getWidth(),
+        g2d.rotate(player1.getDirection(), player1.getX() + player1.getWidth() / 2,
               player1.getY() + player1.getHeight() / 2);
         
         // draw the image
@@ -94,7 +94,7 @@ public class Board extends JPanel implements Runnable {
         g2d.setTransform(old);
         
         // rotating player2, rotation point is the middle of the square
-        g2d.rotate(player2.getDirection(), player2.getX() + player2.getWidth(),
+        g2d.rotate(player2.getDirection(), player2.getX() + player2.getWidth() / 2,
               player2.getY() + player2.getHeight() / 2);
         
         // draw the image
@@ -190,7 +190,8 @@ public class Board extends JPanel implements Runnable {
            player2.setY(0);
         else if (player2.getY() < -100)
            player2.setY(2000);
-        // moving bullets
+        
+        // moving player1 bullets
         ArrayList<Weapon> tmpWs = player1.getBullets();
         for (int i = 0; i < tmpWs.size(); i++) {
         	Weapon tmpW = (Weapon) tmpWs.get(i);
@@ -200,7 +201,7 @@ public class Board extends JPanel implements Runnable {
         		tmpWs.remove(i);
         	}
 
-        // moving bullets
+        // moving player2 bullets
         ArrayList<Weapon> tmpWs2 = player2.getBullets();
                 
         for (int i = 0; i < tmpWs2.size(); i++) {
