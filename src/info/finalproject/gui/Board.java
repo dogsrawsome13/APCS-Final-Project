@@ -191,7 +191,6 @@ public class Board extends JPanel implements Runnable {
         else if (player2.getY() < -100)
            player2.setY(2000);
         
-        
         // moving player1 bullets
         ArrayList<Weapon> tmpWs = player1.getBullets();
         for (int i = 0; i < tmpWs.size(); i++) {
@@ -215,7 +214,6 @@ public class Board extends JPanel implements Runnable {
         	}
         
         // check if player1 is shooting
-
         if (fire)
            player1.fire(reload, numToShoot, spread);
         if (special)
