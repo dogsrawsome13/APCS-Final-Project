@@ -44,9 +44,9 @@ public class Board extends JPanel implements Runnable {
 	
 	private void initBoard() {
 	    player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
-	    		new Pistol(400, 300, 0, 50, 50, "pistol.png", this), this);
+	    		new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
 	    player2 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
-	    		new Pistol(400, 300, 0, 50, 50, "pistol.png", this), this);
+	    		new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
 	    powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png", this);
 	    tmpAngle = 0;
 	    tmpAngle2 = 0;
@@ -55,7 +55,7 @@ public class Board extends JPanel implements Runnable {
 	    canForward = canBackward = true;
 	    canForward2 = canBackward2 = true;
 	    sx = sy = 2;
-	    bullet = new Weapon(0, 0, 0, 0, 0, null, null);
+	    bullet = new Weapon(0, 0, 0, 0, 0, "images/missile.png", null);
 	    bullets = player1.getBullets();
 	    bullets2 = player2.getBullets();
 	    reload = 30;
@@ -74,16 +74,12 @@ public class Board extends JPanel implements Runnable {
               RenderingHints.VALUE_ANTIALIAS_ON);
         AffineTransform old = g2d.getTransform();
         
-        g2d.drawString("" + player1.getHealth(), (int) player1.getX() + 10, (int) player1.getY() - 50);
-        g2d.drawString("" + player2.getHealth(), (int) player2.getX() + 10, (int) player2.getY() - 50);
-
-        
         if (powerup.isVisible())
         	g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
         		powerup.getHeight(), this);
         
-        
-
+        g2d.drawString("" + player1.getHealth(), (int) player1.getX() + 10, (int) player1.getY() - 50);
+       
         // rotating player1, rotation point is the middle of the square
         g2d.rotate(player1.getDirection(), player1.getX() + player1.getWidth() / 2,
               player1.getY() + player1.getHeight() / 2);
@@ -93,6 +89,8 @@ public class Board extends JPanel implements Runnable {
               player1.getWidth(), player1.getHeight(), this);
         g2d.setTransform(old);
         
+        g2d.drawString("" + player2.getHealth(), (int) player2.getX() + 10, (int) player2.getY() - 50);
+        
         // rotating player2, rotation point is the middle of the square
         g2d.rotate(player2.getDirection(), player2.getX() + player2.getWidth() / 2,
               player2.getY() + player2.getHeight() / 2);
@@ -101,8 +99,6 @@ public class Board extends JPanel implements Runnable {
         g2d.drawImage(player2.getImage(), (int) player2.getX(), (int) player2.getY(),
               player2.getWidth(), player2.getHeight(), this);
         g2d.setTransform(old);
-        
-        
 
         // drawing player1 bullets
         ArrayList<Weapon> bullets = player1.getBullets();
@@ -133,11 +129,6 @@ public class Board extends JPanel implements Runnable {
         }
         // in case you have other things to rotate
         g2d.setTransform(old);
-        
-        
-        
-
-        
         		
     }
     
@@ -196,6 +187,8 @@ public class Board extends JPanel implements Runnable {
         for (int i = 0; i < tmpWs.size(); i++) {
         	Weapon tmpW = (Weapon) tmpWs.get(i);
         	tmpW.move();
+        	tmpW.hit(player2);
+        	System.out.println(player2.getHealth());
         	if (tmpW.getX() > 3500 || tmpW.getX() < 0
                          || tmpW.getY() > 2000 || tmpW.getY() < 0)
         		tmpWs.remove(i);
@@ -207,6 +200,7 @@ public class Board extends JPanel implements Runnable {
         for (int i = 0; i < tmpWs2.size(); i++) {
         	Weapon tmpW2 = (Weapon) tmpWs2.get(i);
         	tmpW2.move();
+        	tmpW2.hit(player1);
         	if (tmpW2.getX() > 3500 || tmpW2.getX() < 0
                          || tmpW2.getY() > 2000 || tmpW2.getY() < 0)
         		tmpWs2.remove(i);
@@ -287,7 +281,6 @@ public class Board extends JPanel implements Runnable {
         	powerup.removeSelf();
         }
 
-        System.out.println(player1.toString());
      }
     
     // game key controll
