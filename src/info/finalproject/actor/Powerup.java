@@ -17,9 +17,11 @@ public class Powerup extends Actor {
 			//return new Pistol(this.getX(), this.getY(), this.getDirection(), this.getWidth(), this.getHeight(), "Pistol.png", getBoard());
 		//else
 		if(powerup <= 2)
-			return new MachineGun(this.getX(), this.getY(), this.getDirection(), this.getWidth(), this.getHeight(), "Pistol.png", getBoard());
+			return new MachineGun(this.getX(), this.getY(), this.getDirection(), 
+					this.getWidth(), this.getHeight(), "images/missile.png", getBoard());
 		else if(powerup <= 3)
-			return new RPG(this.getX(), this.getY(), this.getDirection(), this.getWidth(), this.getHeight(), "Pistol.png", getBoard());
+			return new RPG(this.getX(), this.getY(), this.getDirection(), 
+					this.getWidth(), this.getHeight(), "images/missile.png", getBoard());
 		else
 			return null;
 	}

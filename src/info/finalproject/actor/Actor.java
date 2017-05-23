@@ -27,7 +27,8 @@ public class Actor {
 	}
 	
 	public void loadImage(String imageName) {
-	    ImageIcon ii = new ImageIcon(imageName);
+		ClassLoader cldr = this.getClass().getClassLoader();
+	    ImageIcon ii = new ImageIcon(cldr.getResource(imageName));
 	    myImage = ii.getImage();
 	}
 	
