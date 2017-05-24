@@ -205,12 +205,14 @@ public class Board extends JPanel implements Runnable {
 
 		if (r1.intersects(r2)) {
 			Actor powerupItem = null;
-			if (a1 != player1 && a1 instanceof Powerup)
+			if (!(a1 instanceof Player) && a1 instanceof Powerup)
 				powerupItem = ((Powerup) a1).givePowerup();
-			if (a2 != player1 && a2 instanceof Powerup)
+			if (!(a2 instanceof Player) && a2 instanceof Powerup)
 				powerupItem = ((Powerup) a2).givePowerup();
-			if (powerupItem != null && powerupItem instanceof Weapon)
+			if (powerupItem != null && powerupItem instanceof Weapon && a1.equals(player1))
 				player1.setWeapon((Weapon) powerupItem);
+			if (powerupItem != null && powerupItem instanceof Weapon && a1.equals(player2))
+				player2.setWeapon((Weapon) powerupItem);
 			if (a1 instanceof Player && a2 instanceof Player)
 				return false;
 			if ((a1 instanceof Powerup && a2 instanceof Weapon) || (a1 instanceof Weapon && a2 instanceof Powerup))
