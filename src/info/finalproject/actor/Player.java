@@ -24,7 +24,7 @@ public class Player extends Actor {
 	public Player(int x, int y, double degrees, int width, int height, String imageName, int speed, Weapon weapon,
 			Board board) {
 		super(x, y, degrees, width, height, imageName, board);
-		myHealth = 1000;
+		myHealth = 100;
 		mySpeed = speed;
 		pistols = new ArrayList<Pistol>();
 		machineGuns = new ArrayList<MachineGun>();

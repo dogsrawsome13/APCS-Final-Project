@@ -30,6 +30,7 @@ public class Board extends JPanel implements Runnable {
 	private int tmpAngle, tmpAngle2, sx, sy, reload, numToShoot, spread;
 	private boolean moveForward, canForward, canBackward, moveBackward, left, right, fire, special;
 	private boolean moveForward2, canForward2, canBackward2, moveBackward2, left2, right2, fire2, special2;
+	private boolean gameRunning;
 
 	public Board() {
 		initBoard();
@@ -60,6 +61,7 @@ public class Board extends JPanel implements Runnable {
 		reload = 30;
 		numToShoot = 1;
 		spread = 0;
+		gameRunning = true;
 
 		loop = new Thread(this);
 		loop.start();
@@ -113,8 +115,8 @@ public class Board extends JPanel implements Runnable {
 			// in case you have other things to rotate
 			g2d.setTransform(old);
 		}
-		
-		//drawing player1 MachineGuns
+
+		// drawing player1 MachineGuns
 		if (player1.getWeapon() instanceof MachineGun) {
 			ArrayList<MachineGun> bullets = player1.getBullets();
 			for (int i = 0; i < bullets.size(); i++) {
@@ -129,8 +131,8 @@ public class Board extends JPanel implements Runnable {
 			// in case you have other things to rotate
 			g2d.setTransform(old);
 		}
-		
-		//drawing player1 RPGs
+
+		// drawing player1 RPGs
 		if (player1.getWeapon() instanceof RPG) {
 			ArrayList<RPG> bullets = player1.getBullets();
 			for (int i = 0; i < bullets.size(); i++) {
@@ -161,7 +163,7 @@ public class Board extends JPanel implements Runnable {
 			// in case you have other things to rotate
 			g2d.setTransform(old);
 		}
-		
+
 		// drawing player2 MachineGuns
 		if (player2.getWeapon() instanceof MachineGun) {
 
@@ -178,7 +180,7 @@ public class Board extends JPanel implements Runnable {
 			// in case you have other things to rotate
 			g2d.setTransform(old);
 		}
-		
+
 		// drawing player2 RPGs
 		if (player2.getWeapon() instanceof RPG) {
 			ArrayList<RPG> bullets = player2.getBullets();
@@ -253,8 +255,10 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				Pistol tmpW = tmpWs.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (tmpW.isHit(player2))
+				if (tmpW.isHit(player2)) {
 					tmpW.hit(player2);
+					tmpWs.remove(i);
+				}
 				if (tmpW.getX() > 3500 || tmpW.getX() < 0 || tmpW.getY() > 2000 || tmpW.getY() < 0)
 					tmpWs.remove(i);
 			}
@@ -267,8 +271,10 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				MachineGun tmpW1 = tmpWs.get(i);
 				tmpW1.move(tmpW1.getSpeed());
-				if (tmpW1.isHit(player2))
+				if (tmpW1.isHit(player2)) {
 					tmpW1.hit(player2);
+					tmpWs.remove(i);
+				}
 				if (tmpW1.getX() > 3500 || tmpW1.getX() < 0 || tmpW1.getY() > 2000 || tmpW1.getY() < 0)
 					tmpWs.remove(i);
 			}
@@ -281,8 +287,10 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				RPG tmpW2 = tmpWs.get(i);
 				tmpW2.move(tmpW2.getSpeed());
-				if (tmpW2.isHit(player2))
+				if (tmpW2.isHit(player2)) {
 					tmpW2.hit(player2);
+					tmpWs.remove(i);
+				}
 				if (tmpW2.getX() > 3500 || tmpW2.getX() < 0 || tmpW2.getY() > 2000 || tmpW2.getY() < 0)
 					tmpWs.remove(i);
 			}
@@ -295,8 +303,10 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				Pistol tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (tmpW.isHit(player1))
+				if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
+					tmpWs2.remove(i);
+				}
 				if (tmpW.getX() > 3500 || tmpW.getX() < 0 || tmpW.getY() > 2000 || tmpW.getY() < 0)
 					tmpWs2.remove(i);
 			}
@@ -308,8 +318,10 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				MachineGun tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (tmpW.isHit(player1))
+				if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
+					tmpWs2.remove(i);
+				}
 				if (tmpW.getX() > 3500 || tmpW.getX() < 0 || tmpW.getY() > 2000 || tmpW.getY() < 0)
 					tmpWs2.remove(i);
 
@@ -322,8 +334,10 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				RPG tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (tmpW.isHit(player1))
+				if (tmpW.isHit(player1)) {
+					tmpWs2.remove(i);
 					tmpW.hit(player1);
+				}
 				if (tmpW.getX() > 3500 || tmpW.getX() < 0 || tmpW.getY() > 2000 || tmpW.getY() < 0)
 					tmpWs2.remove(i);
 			}
@@ -402,7 +416,27 @@ public class Board extends JPanel implements Runnable {
 				player2.setWeapon((Weapon) powerupItem);
 			powerup.removeSelf();
 		}
+		
+		checkGameRunning(player1);
+		checkGameRunning(player2);
 
+	}
+	
+	public ArrayList<Actor> getActors() {
+
+		ArrayList<Actor> actors = new ArrayList<Actor>();
+		actors.add(player1);
+		actors.add(powerup);
+		for (Weapon bullet : bullets) {
+			actors.add(bullet);
+		}
+		return actors;
+
+	}
+
+	public void checkGameRunning(Player player) {
+		if (player.getHealth() <= 0)
+			gameRunning = false;
 	}
 
 	// game key controll
@@ -464,11 +498,11 @@ public class Board extends JPanel implements Runnable {
 	@Override
 	public void run() {
 
-		while (true) {
+		while (gameRunning) {
 			repaint();
 			play();
 			try {
-				Thread.sleep(5);
+				Thread.sleep(6);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -476,15 +510,5 @@ public class Board extends JPanel implements Runnable {
 		}
 	}
 
-	public ArrayList<Actor> getActors() {
 
-		ArrayList<Actor> actors = new ArrayList<Actor>();
-		actors.add(player1);
-		actors.add(powerup);
-		for (Weapon bullet : bullets) {
-			actors.add(bullet);
-		}
-		return actors;
-
-	}
 }
