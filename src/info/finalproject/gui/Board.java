@@ -81,6 +81,10 @@ public class Board extends JPanel implements Runnable {
 		if (rock.isVisible())
 			g2d.drawImage(rock.getImage(), (int) rock.getX(), (int) rock.getY(),
 					rock.getWidth(), rock.getHeight(), this);
+		
+		if (wall.isVisible())
+			g2d.drawImage(wall.getImage(), (int) wall.getX(), (int) wall.getY(),
+					wall.getWidth(), wall.getHeight(), this);
 
 		if (powerup.isVisible())
 			g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
@@ -298,7 +302,7 @@ public class Board extends JPanel implements Runnable {
 				RPG tmpW2 = tmpWs.get(i);
 				tmpW2.move(tmpW2.getSpeed());
 				if (tmpW2.isHit(player2)) {
-					tmpW2.hit(player2);
+					tmpW2.explode(player2);
 					tmpWs.remove(i);
 				}
 				if (tmpW2.getX() > 3500 || tmpW2.getX() < 0 || tmpW2.getY() > 2000 || tmpW2.getY() < 0)
@@ -345,8 +349,8 @@ public class Board extends JPanel implements Runnable {
 				RPG tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
 				if (tmpW.isHit(player1)) {
-					tmpWs2.remove(i);
 					tmpW.hit(player1);
+					tmpWs2.remove(i);
 				}
 				if (tmpW.getX() > 3500 || tmpW.getX() < 0 || tmpW.getY() > 2000 || tmpW.getY() < 0)
 					tmpWs2.remove(i);
@@ -436,6 +440,9 @@ public class Board extends JPanel implements Runnable {
 
 		ArrayList<Actor> actors = new ArrayList<Actor>();
 		actors.add(player1);
+		actors.add(player2);
+		actors.add(wall);
+		actors.add(rock);
 		actors.add(powerup);
 		for (Weapon bullet : bullets) {
 			actors.add(bullet);
@@ -456,7 +463,6 @@ public class Board extends JPanel implements Runnable {
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE)
 				fire = true;
-			System.out.println("" + player1.getWeapon());
 			if (e.getKeyCode() == e.VK_UP)
 				moveForward = true;
 			if (e.getKeyCode() == e.VK_DOWN)
@@ -468,7 +474,6 @@ public class Board extends JPanel implements Runnable {
 
 			if (e.getKeyCode() == KeyEvent.VK_T)
 				fire2 = true;
-			System.out.println("" + player2.getWeapon());
 			if (e.getKeyCode() == e.VK_W)
 				moveForward2 = true;
 			if (e.getKeyCode() == e.VK_S)
