@@ -26,6 +26,8 @@ public class Board extends JPanel implements Runnable {
 	private Thread loop; // the loop
 	private Player player1, player2;
 	private Powerup powerup;
+	private Rock rock;
+	private Wall wall;
 	private ArrayList<Weapon> bullets, bullets2;
 	private int tmpAngle, tmpAngle2, sx, sy, reload, numToShoot, spread;
 	private boolean moveForward, canForward, canBackward, moveBackward, left, right, fire, special;
@@ -45,9 +47,11 @@ public class Board extends JPanel implements Runnable {
 	private void initBoard() {
 		player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
 				new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
-		player2 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
+		player2 = new Player(800, 700, 0, 50, 50, "images/Shooter.png", 30,
 				new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
 		powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png", this);
+		rock = new Rock(600, 600, 100, 100, "images/Rock.png", this);
+		wall = new Wall(700, 700, 100, 100, "images/Wall.png", this);
 		tmpAngle = 0;
 		tmpAngle2 = 0;
 		special = fire = left = right = moveForward = moveBackward = false;
@@ -73,6 +77,10 @@ public class Board extends JPanel implements Runnable {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		AffineTransform old = g2d.getTransform();
+		
+		if (rock.isVisible())
+			g2d.drawImage(rock.getImage(), (int) rock.getX(), (int) rock.getY(),
+					rock.getWidth(), rock.getHeight(), this);
 
 		if (powerup.isVisible())
 			g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
@@ -147,7 +155,7 @@ public class Board extends JPanel implements Runnable {
 			// in case you have other things to rotate
 			g2d.setTransform(old);
 		}
-
+		
 		// drawing player2 Pistols
 		if (player2.getWeapon() instanceof Pistol) {
 			ArrayList<Pistol> bullets = player2.getBullets();
