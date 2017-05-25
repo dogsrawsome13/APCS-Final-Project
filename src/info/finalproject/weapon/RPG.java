@@ -29,18 +29,16 @@ public class RPG extends Weapon {
 		return "RPG" + super.getX() + " " + super.getY();
 	}
 
-	public void explode(Player player) {
+	public void explode() {
 
 		for (Actor actor : getBoard().getActors()) {
 			if (getBoard().checkCollisions(this, actor)) {
-				if (actor instanceof Wall || actor instanceof Rock || actor instanceof Player) {
-					Rectangle r1 = new Rectangle((int) this.getX(), (int) this.getY(), 40, 40);
-					for (Actor actor1 : getBoard().getActors()) {
-						if (r1.intersects(actor1.getBounds())) {
-							if (!actor1.equals(actor) && actor1 instanceof Player)
-								hit((player));
-						}
-					}
+				if(actor instanceof Wall || actor instanceof Rock || actor instanceof Player) {
+					Rectangle r1 = getBounds();
+					for(Actor actor1 : getBoard().getActors())
+						if(r1.intersects(actor1.getBounds()))
+							if(actor1 instanceof Player)
+								hit((Player) actor1);
 				}
 			}
 		}

@@ -302,7 +302,7 @@ public class Board extends JPanel implements Runnable {
 				RPG tmpW2 = tmpWs.get(i);
 				tmpW2.move(tmpW2.getSpeed());
 				if (tmpW2.isHit(player2)) {
-					tmpW2.explode(player2);
+					tmpW2.explode();
 					tmpWs.remove(i);
 				}
 				if (tmpW2.getX() > 3500 || tmpW2.getX() < 0 || tmpW2.getY() > 2000 || tmpW2.getY() < 0)
@@ -349,7 +349,7 @@ public class Board extends JPanel implements Runnable {
 				RPG tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
 				if (tmpW.isHit(player1)) {
-					tmpW.hit(player1);
+					tmpW.explode();
 					tmpWs2.remove(i);
 				}
 				if (tmpW.getX() > 3500 || tmpW.getX() < 0 || tmpW.getY() > 2000 || tmpW.getY() < 0)
