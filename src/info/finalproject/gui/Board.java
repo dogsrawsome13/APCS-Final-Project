@@ -269,6 +269,8 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				Pistol tmpW = tmpWs.get(i);
 				tmpW.move(tmpW.getSpeed());
+				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
+					tmpWs.remove(i);	
 				if (tmpW.isHit(player2)) {
 					tmpW.hit(player2);
 					tmpWs.remove(i);
@@ -285,6 +287,8 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				MachineGun tmpW1 = tmpWs.get(i);
 				tmpW1.move(tmpW1.getSpeed());
+				if (checkCollisions(tmpW1, rock) || checkCollisions(tmpW1, wall))
+					tmpWs.remove(i);
 				if (tmpW1.isHit(player2)) {
 					tmpW1.hit(player2);
 					tmpWs.remove(i);
@@ -317,6 +321,9 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				Pistol tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
+				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
+					tmpWs2.remove(i);	
+				
 				if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
@@ -332,6 +339,8 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				MachineGun tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
+				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
+					tmpWs2.remove(i);	
 				if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
