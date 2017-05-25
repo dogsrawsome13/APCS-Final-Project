@@ -41,7 +41,7 @@ public class Board extends JPanel implements Runnable {
 		setBackground(Color.WHITE);
 		setDoubleBuffered(true);
 		setFocusable(true);
-
+		
 	}
 
 	private void initBoard() {
