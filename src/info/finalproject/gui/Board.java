@@ -459,52 +459,51 @@ public class Board extends JPanel implements Runnable {
 	// game key controll
 
 	private class Controll extends KeyAdapter {
-
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE)
 				fire = true;
-			if (e.getKeyCode() == e.VK_UP)
+			if (e.getKeyCode() == KeyEvent.VK_UP)
 				moveForward = true;
-			if (e.getKeyCode() == e.VK_DOWN)
+			if (e.getKeyCode() == KeyEvent.VK_DOWN)
 				moveBackward = true;
-			if (e.getKeyCode() == e.VK_LEFT)
+			if (e.getKeyCode() == KeyEvent.VK_LEFT)
 				left = true;
-			if (e.getKeyCode() == e.VK_RIGHT)
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 				right = true;
 
 			if (e.getKeyCode() == KeyEvent.VK_T)
 				fire2 = true;
-			if (e.getKeyCode() == e.VK_W)
+			if (e.getKeyCode() == KeyEvent.VK_W)
 				moveForward2 = true;
-			if (e.getKeyCode() == e.VK_S)
+			if (e.getKeyCode() == KeyEvent.VK_S)
 				moveBackward2 = true;
-			if (e.getKeyCode() == e.VK_A)
+			if (e.getKeyCode() == KeyEvent.VK_A)
 				left2 = true;
-			if (e.getKeyCode() == e.VK_D)
+			if (e.getKeyCode() == KeyEvent.VK_D)
 				right2 = true;
 		}
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE)
 				fire = false;
-			if (e.getKeyCode() == e.VK_UP)
+			if (e.getKeyCode() == KeyEvent.VK_UP)
 				moveForward = false;
-			if (e.getKeyCode() == e.VK_DOWN)
+			if (e.getKeyCode() == KeyEvent.VK_DOWN)
 				moveBackward = false;
-			if (e.getKeyCode() == e.VK_LEFT)
+			if (e.getKeyCode() == KeyEvent.VK_LEFT)
 				left = false;
-			if (e.getKeyCode() == e.VK_RIGHT)
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 				right = false;
 
 			if (e.getKeyCode() == KeyEvent.VK_T)
 				fire2 = false;
-			if (e.getKeyCode() == e.VK_W)
+			if (e.getKeyCode() == KeyEvent.VK_W)
 				moveForward2 = false;
-			if (e.getKeyCode() == e.VK_S)
+			if (e.getKeyCode() == KeyEvent.VK_S)
 				moveBackward2 = false;
-			if (e.getKeyCode() == e.VK_A)
+			if (e.getKeyCode() == KeyEvent.VK_A)
 				left2 = false;
-			if (e.getKeyCode() == e.VK_D)
+			if (e.getKeyCode() == KeyEvent.VK_D)
 				right2 = false;
 		}
 
