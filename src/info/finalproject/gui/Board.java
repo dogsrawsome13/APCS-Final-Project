@@ -469,9 +469,8 @@ public class Board extends JPanel implements Runnable {
 	// game key controll
 
 	private class Controll extends KeyAdapter {
-
 		public void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_SPACE)
+			if (e.getKeyCode() == e.VK_SPACE)
 				fire = true;
 			if (e.getKeyCode() == e.VK_UP)
 				moveForward = true;
@@ -482,7 +481,7 @@ public class Board extends JPanel implements Runnable {
 			if (e.getKeyCode() == e.VK_RIGHT)
 				right = true;
 
-			if (e.getKeyCode() == KeyEvent.VK_T)
+			if (e.getKeyCode() == e.VK_T)
 				fire2 = true;
 			if (e.getKeyCode() == e.VK_W)
 				moveForward2 = true;
@@ -495,7 +494,7 @@ public class Board extends JPanel implements Runnable {
 		}
 
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_SPACE)
+			if (e.getKeyCode() == e.VK_SPACE)
 				fire = false;
 			if (e.getKeyCode() == e.VK_UP)
 				moveForward = false;
@@ -506,7 +505,7 @@ public class Board extends JPanel implements Runnable {
 			if (e.getKeyCode() == e.VK_RIGHT)
 				right = false;
 
-			if (e.getKeyCode() == KeyEvent.VK_T)
+			if (e.getKeyCode() == e.VK_T)
 				fire2 = false;
 			if (e.getKeyCode() == e.VK_W)
 				moveForward2 = false;
