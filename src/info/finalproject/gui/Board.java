@@ -155,6 +155,7 @@ public class Board extends JPanel implements Runnable {
 				else
 					g2d.setColor(new Color(60, 20, 120));
 				g2d.fillRect((int) tmpB.getX(), (int) tmpB.getY(), tmpB.getWidth(), tmpB.getHeight());
+
 			}
 			// in case you have other things to rotate
 			g2d.setTransform(old);
