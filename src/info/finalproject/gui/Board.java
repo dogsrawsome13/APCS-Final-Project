@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
@@ -33,6 +34,7 @@ public class Board extends JPanel implements Runnable {
 	private boolean moveForward, canForward, canBackward, moveBackward, left, right, fire, special;
 	private boolean moveForward2, canForward2, canBackward2, moveBackward2, left2, right2, fire2, special2;
 	private boolean gameRunning;
+	private boolean isExplosion1;
 
 	public Board() {
 		initBoard();
@@ -66,10 +68,12 @@ public class Board extends JPanel implements Runnable {
 		numToShoot = 1;
 		spread = 0;
 		gameRunning = true;
+		isExplosion1 = false;
 
 		loop = new Thread(this);
 		loop.start();
 	}
+	
 
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -155,7 +159,7 @@ public class Board extends JPanel implements Runnable {
 				else
 					g2d.setColor(new Color(60, 20, 120));
 				g2d.fillRect((int) tmpB.getX(), (int) tmpB.getY(), tmpB.getWidth(), tmpB.getHeight());
-
+					
 			}
 			// in case you have other things to rotate
 			g2d.setTransform(old);
@@ -272,7 +276,7 @@ public class Board extends JPanel implements Runnable {
 				tmpW.move(tmpW.getSpeed());
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
 					tmpWs.remove(i);
-				if (tmpW.isHit(player2)) {
+				else if (tmpW.isHit(player2)) {
 					tmpW.hit(player2);
 					tmpWs.remove(i);
 				}
@@ -290,7 +294,7 @@ public class Board extends JPanel implements Runnable {
 				tmpW1.move(tmpW1.getSpeed());
 				if (checkCollisions(tmpW1, rock) || checkCollisions(tmpW1, wall))
 					tmpWs.remove(i);
-				if (tmpW1.isHit(player2)) {
+				else if (tmpW1.isHit(player2)) {
 					tmpW1.hit(player2);
 					tmpWs.remove(i);
 				}
@@ -307,6 +311,7 @@ public class Board extends JPanel implements Runnable {
 				RPG tmpW2 = tmpWs.get(i);
 				tmpW2.move(tmpW2.getSpeed());
 				if (tmpW2.isHit(player2) || tmpW2.isHit(wall) || tmpW2.isHit(rock)) {
+					isExplosion1 = true;
 					tmpW2.explode();
 					tmpWs.remove(i);
 				}
@@ -325,7 +330,7 @@ public class Board extends JPanel implements Runnable {
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
 					tmpWs2.remove(i);
 
-				if (tmpW.isHit(player1)) {
+				else if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
 				}
@@ -342,7 +347,7 @@ public class Board extends JPanel implements Runnable {
 				tmpW.move(tmpW.getSpeed());
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
 					tmpWs2.remove(i);
-				if (tmpW.isHit(player1)) {
+				else if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
 				}
