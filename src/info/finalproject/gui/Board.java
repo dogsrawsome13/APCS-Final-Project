@@ -26,8 +26,8 @@ public class Board extends JPanel implements Runnable {
 	private Thread loop; // the loop
 	private Player player1, player2;
 	private Powerup powerup;
-	private Rock rock;
-	private Wall wall;
+	private Rock rock, rock1, rock2, rock3;
+	private Wall wall, wall1, wall2, wall3;
 	private ArrayList<Weapon> bullets, bullets2;
 	private int tmpAngle, tmpAngle2, sx, sy, reload, numToShoot, spread;
 	private boolean moveForward, canForward, canBackward, moveBackward, left, right, fire, special;
@@ -51,7 +51,10 @@ public class Board extends JPanel implements Runnable {
 				new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
 		powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png", this);
 		rock = new Rock(600, 600, 100, 100, "images/Rock.png", this);
-		wall = new Wall(700, 700, 100, 100, "images/Wall.png", this);
+		rock1 = new Rock(1000, 400, 100, 100, "images/Rock.png", this);
+		rock2 = new Rock(1550, 780, 100, 100, "images/Rock.png", this);
+		rock3 = new Rock(710, 110, 100, 100, "images/Rock.png", this);
+		wall = new Wall(700, 700, 10, 100, 1000, "images/Wall.png", this);
 		tmpAngle = 0;
 		tmpAngle2 = 0;
 		special = fire = left = right = moveForward = moveBackward = false;
@@ -81,10 +84,21 @@ public class Board extends JPanel implements Runnable {
 		if (rock.isVisible())
 			g2d.drawImage(rock.getImage(), (int) rock.getX(), (int) rock.getY(), rock.getWidth(), rock.getHeight(),
 					this);
+		if (rock1.isVisible())
+			g2d.drawImage(rock1.getImage(), (int) rock1.getX(), (int) rock1.getY(), rock1.getWidth(), rock1.getHeight(),
+					this);
+		if (rock2.isVisible())
+			g2d.drawImage(rock2.getImage(), (int) rock2.getX(), (int) rock2.getY(), rock2.getWidth(), rock2.getHeight(),
+					this);
+		if (rock3.isVisible())
+			g2d.drawImage(rock3.getImage(), (int) rock3.getX(), (int) rock3.getY(), rock3.getWidth(), rock3.getHeight(),
+					this);
 
-		if (wall.isVisible())
+		if (wall.isVisible()) {
 			g2d.drawImage(wall.getImage(), (int) wall.getX(), (int) wall.getY(), wall.getWidth(), wall.getHeight(),
 					this);
+			//g2d.rotate(wall.getDegrees());
+		}
 
 		if (powerup.isVisible())
 			g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
@@ -272,7 +286,7 @@ public class Board extends JPanel implements Runnable {
 				tmpW.move(tmpW.getSpeed());
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
 					tmpWs.remove(i);
-				if (tmpW.isHit(player2)) {
+				else if (tmpW.isHit(player2)) {
 					tmpW.hit(player2);
 					tmpWs.remove(i);
 				}
@@ -290,7 +304,7 @@ public class Board extends JPanel implements Runnable {
 				tmpW1.move(tmpW1.getSpeed());
 				if (checkCollisions(tmpW1, rock) || checkCollisions(tmpW1, wall))
 					tmpWs.remove(i);
-				if (tmpW1.isHit(player2)) {
+				else if (tmpW1.isHit(player2)) {
 					tmpW1.hit(player2);
 					tmpWs.remove(i);
 				}
@@ -325,7 +339,7 @@ public class Board extends JPanel implements Runnable {
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
 					tmpWs2.remove(i);
 
-				if (tmpW.isHit(player1)) {
+				else if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
 				}
@@ -342,7 +356,7 @@ public class Board extends JPanel implements Runnable {
 				tmpW.move(tmpW.getSpeed());
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
 					tmpWs2.remove(i);
-				if (tmpW.isHit(player1)) {
+				else if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
 				}

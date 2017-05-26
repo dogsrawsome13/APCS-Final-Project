@@ -1,10 +1,12 @@
 package info.finalproject.gui;
 
 public class Wall extends Rock {
-	
-	public Wall(double x, double y, int width, int height, String imageName, Board board) {
+	private double myDegrees;
+	public Wall(double x, double y, double degrees, int width, int height, String imageName, Board board) {
 		super(x, y, width, height, imageName, board);
-		
+		myDegrees = degrees;
 	}
-
+	public double getDegrees() {
+		return myDegrees;
+	}
 }
