@@ -41,7 +41,7 @@ public class Board extends JPanel implements Runnable {
 		setBackground(Color.WHITE);
 		setDoubleBuffered(true);
 		setFocusable(true);
-		
+
 	}
 
 	private void initBoard() {
@@ -77,14 +77,14 @@ public class Board extends JPanel implements Runnable {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		AffineTransform old = g2d.getTransform();
-		
+
 		if (rock.isVisible())
-			g2d.drawImage(rock.getImage(), (int) rock.getX(), (int) rock.getY(),
-					rock.getWidth(), rock.getHeight(), this);
-		
+			g2d.drawImage(rock.getImage(), (int) rock.getX(), (int) rock.getY(), rock.getWidth(), rock.getHeight(),
+					this);
+
 		if (wall.isVisible())
-			g2d.drawImage(wall.getImage(), (int) wall.getX(), (int) wall.getY(),
-					wall.getWidth(), wall.getHeight(), this);
+			g2d.drawImage(wall.getImage(), (int) wall.getX(), (int) wall.getY(), wall.getWidth(), wall.getHeight(),
+					this);
 
 		if (powerup.isVisible())
 			g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
@@ -159,7 +159,7 @@ public class Board extends JPanel implements Runnable {
 			// in case you have other things to rotate
 			g2d.setTransform(old);
 		}
-		
+
 		// drawing player2 Pistols
 		if (player2.getWeapon() instanceof Pistol) {
 			ArrayList<Pistol> bullets = player2.getBullets();
@@ -270,7 +270,7 @@ public class Board extends JPanel implements Runnable {
 				Pistol tmpW = tmpWs.get(i);
 				tmpW.move(tmpW.getSpeed());
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
-					tmpWs.remove(i);	
+					tmpWs.remove(i);
 				if (tmpW.isHit(player2)) {
 					tmpW.hit(player2);
 					tmpWs.remove(i);
@@ -305,7 +305,7 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				RPG tmpW2 = tmpWs.get(i);
 				tmpW2.move(tmpW2.getSpeed());
-				if (tmpW2.isHit(player2)) {
+				if (tmpW2.isHit(player2) || tmpW2.isHit(wall) || tmpW2.isHit(rock)) {
 					tmpW2.explode();
 					tmpWs.remove(i);
 				}
@@ -322,8 +322,8 @@ public class Board extends JPanel implements Runnable {
 				Pistol tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
-					tmpWs2.remove(i);	
-				
+					tmpWs2.remove(i);
+
 				if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
@@ -340,7 +340,7 @@ public class Board extends JPanel implements Runnable {
 				MachineGun tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
 				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
-					tmpWs2.remove(i);	
+					tmpWs2.remove(i);
 				if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
 					tmpWs2.remove(i);
@@ -357,7 +357,7 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				RPG tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (tmpW.isHit(player1)) {
+				if (tmpW.isHit(player1) || tmpW.isHit(wall) || tmpW.isHit(rock)) {
 					tmpW.explode();
 					tmpWs2.remove(i);
 				}
@@ -439,12 +439,12 @@ public class Board extends JPanel implements Runnable {
 				player2.setWeapon((Weapon) powerupItem);
 			powerup.removeSelf();
 		}
-		
+
 		checkGameRunning(player1);
 		checkGameRunning(player2);
 
 	}
-	
+
 	public ArrayList<Actor> getActors() {
 
 		ArrayList<Actor> actors = new ArrayList<Actor>();
@@ -532,6 +532,5 @@ public class Board extends JPanel implements Runnable {
 			}
 		}
 	}
-
 
 }

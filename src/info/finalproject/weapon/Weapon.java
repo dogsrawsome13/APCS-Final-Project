@@ -2,6 +2,7 @@ package info.finalproject.weapon;
 
 import java.awt.Rectangle;
 
+import info.finalproject.actor.Actor;
 import info.finalproject.actor.Player;
 import info.finalproject.actor.Powerup;
 import info.finalproject.gui.*;
@@ -36,8 +37,8 @@ public class Weapon extends Powerup {
 		super.setY(super.getY() + (int) (Math.sin(super.getDirection()) * speed));
 	}
 	
-	public boolean isHit(Player player) {
-		Rectangle r1 = player.getBounds();
+	public boolean isHit(Actor actor) {
+		Rectangle r1 = actor.getBounds();
 		if (getBounds().intersects(r1))
 			return true;
 		else
