@@ -34,7 +34,7 @@ public class RPG extends Weapon {
 		for (Actor actor : getBoard().getActors()) {
 			if (getBoard().checkCollisions(this, actor)) {
 				if(actor instanceof Wall || actor instanceof Rock || actor instanceof Player) {
-					Rectangle r1 = getBounds();
+					Rectangle r1 = new Rectangle((int) super.getX(), (int) super.getY(), 50, 50);
 					for(Actor actor1 : getBoard().getActors())
 						if(r1.intersects(actor1.getBounds()))
 							if(actor1 instanceof Player)
