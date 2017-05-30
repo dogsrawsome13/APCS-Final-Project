@@ -56,7 +56,7 @@ public class Board extends JPanel implements Runnable {
 		rock1 = new Rock(1000, 400, 100, 100, "images/Rock.png", this);
 		rock2 = new Rock(1550, 780, 100, 100, "images/Rock.png", this);
 		rock3 = new Rock(710, 110, 100, 100, "images/Rock.png", this);
-		wall = new Wall(700, 700, 10, 100, 1000, "images/Wall.png", this);
+		wall = new Wall(700, 700, 0, 5, 1000, "images/Wall.png", this);
 		tmpAngle = 0;
 		tmpAngle2 = 0;
 		special = fire = left = right = moveForward = moveBackward = false;
@@ -101,7 +101,6 @@ public class Board extends JPanel implements Runnable {
 		if (wall.isVisible()) {
 			g2d.drawImage(wall.getImage(), (int) wall.getX(), (int) wall.getY(), wall.getWidth(), wall.getHeight(),
 					this);
-			//g2d.rotate(wall.getDegrees());
 		}
 
 		if (powerup.isVisible())
