@@ -5,6 +5,7 @@ public class Wall extends Rock {
 	public Wall(double x, double y, double degrees, int width, int height, String imageName, Board board) {
 		super(x, y, width, height, imageName, board);
 		myDegrees = degrees;
+		setDirection(myDegrees);
 	}
 	public double getDegrees() {
 		return myDegrees;
