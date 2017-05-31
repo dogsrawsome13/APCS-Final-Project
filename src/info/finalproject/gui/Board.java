@@ -26,11 +26,11 @@ public class Board extends JPanel implements Runnable {
 
 	private Thread loop; // the loop
 	private Player player1, player2;
-	private Powerup powerup;
+	private Powerup powerup, powerup1;
 	private Rock rock, rock1, rock2, rock3;
 	private Wall wall, wall1, wall2, wall3;
 	private ArrayList<Weapon> bullets, bullets2;
-	private int tmpAngle, tmpAngle2, sx, sy, reload, numToShoot, spread;
+	private int tmpAngle, tmpAngle2, sx1, sy1, sx2, sy2, reload, numToShoot, spread;
 	private boolean moveForward, canForward, canBackward, moveBackward, left, right, fire, special;
 	private boolean moveForward2, canForward2, canBackward2, moveBackward2, left2, right2, fire2, special2;
 	private boolean gameRunning;
@@ -49,9 +49,10 @@ public class Board extends JPanel implements Runnable {
 	private void initBoard() {
 		player1 = new Player(400, 300, 0, 50, 50, "images/Shooter.png", 30,
 				new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
-		player2 = new Player(800, 700, 0, 50, 50, "images/Shooter.png", 30,
+		player2 = new Player(800, 300, 0, 50, 50, "images/Shooter.png", 30,
 				new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
 		powerup = new Powerup(500, 500, 0, 20, 20, "images/crate.png", this);
+		powerup1 = new Powerup(700, 700, 0, 20, 20, "images/crate.png", this);
 		rock = new Rock(600, 600, 100, 100, "images/Rock.png", this);
 		rock1 = new Rock(1000, 400, 100, 100, "images/Rock.png", this);
 		rock2 = new Rock(1550, 780, 100, 100, "images/Rock.png", this);
@@ -63,7 +64,8 @@ public class Board extends JPanel implements Runnable {
 		special2 = fire2 = left2 = right2 = moveForward2 = moveBackward2 = false;
 		canForward = canBackward = true;
 		canForward2 = canBackward2 = true;
-		sx = sy = 2;
+		sx1 = sy1 = 2;
+		sx2 = sy2 = 2;
 		bullet = new Weapon(0, 0, 0, 0, 0, "images/missile.png", null);
 		bullets = player1.getBullets();
 		bullets2 = player2.getBullets();
@@ -109,6 +111,9 @@ public class Board extends JPanel implements Runnable {
 		if (powerup.isVisible())
 			g2d.drawImage(powerup.getImage(), (int) powerup.getX(), (int) powerup.getY(), powerup.getWidth(),
 					powerup.getHeight(), this);
+		if (powerup1.isVisible())
+			g2d.drawImage(powerup1.getImage(), (int) powerup1.getX(), (int) powerup1.getY(), powerup1.getWidth(),
+					powerup1.getHeight(), this);
 
 		g2d.drawString("" + player1.getHealth(), (int) player1.getX() + 10, (int) player1.getY() - 50);
 
@@ -456,11 +461,11 @@ public class Board extends JPanel implements Runnable {
 		// moving player1
 		if (moveForward)
 			if (canForward)
-				player1.moveForward(sx, sy);
+				player1.moveForward(sx1, sy1);
 
 		if (moveBackward)
 			if (canBackward)
-				player1.moveBackward(sx, sy);
+				player1.moveBackward(sx1, sy1);
 
 		// check if player2 shooting
 		if (fire2)
@@ -486,11 +491,11 @@ public class Board extends JPanel implements Runnable {
 		// moving player2
 		if (moveForward2)
 			if (canForward2)
-				player2.moveForward(sx, sy);
+				player2.moveForward(sx2, sy2);
 
 		if (moveBackward2)
 			if (canBackward2)
-				player2.moveBackward(sx, sy);
+				player2.moveBackward(sx2, sy2);
 
 		if (checkCollisions(player1, powerup)) {
 			Actor powerupItem = powerup.givePowerup();
@@ -506,6 +511,24 @@ public class Board extends JPanel implements Runnable {
 			powerup.removeSelf();
 		}
 		
+		if (player1.getDirection() >= player1.getDirection() + 90 || player1.getDirection() <= player1.getDirection() - 90)
+			sx1 = sy1 = 2;
+		
+		if (checkCollisions(player1, rock) 
+				|| checkCollisions(player1, rock1) 
+				|| checkCollisions(player1, rock2) 
+				|| checkCollisions(player1, rock3) 
+				|| checkCollisions(player1, wall)) 
+			sx1 = sy1 = 0;
+
+		if (checkCollisions(player2, rock) 
+				|| checkCollisions(player2, rock1) 
+				|| checkCollisions(player2, rock2) 
+				|| checkCollisions(player2, rock3) 
+				|| checkCollisions(player2, wall)) 
+			sx2 = sy2 = 0;
+		else
+			sx2 = sy2 = 2;
 
 		checkGameRunning(player1);
 		checkGameRunning(player2);
