@@ -76,7 +76,6 @@ public class Board extends JPanel implements Runnable {
 		loop = new Thread(this);
 		loop.start();
 	}
-	
 
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -99,11 +98,12 @@ public class Board extends JPanel implements Runnable {
 					this);
 
 		if (wall.isVisible()) {
-			g2d.rotate(wall.getDegrees(), (int) wall.getX() + wall.getWidth() / 2, (int) wall.getY() + wall.getHeight() / 2);
+			g2d.rotate(wall.getDegrees(), (int) wall.getX() + wall.getWidth() / 2,
+					(int) wall.getY() + wall.getHeight() / 2);
 			g2d.drawImage(wall.getImage(), (int) wall.getX(), (int) wall.getY(), wall.getWidth(), wall.getHeight(),
 					this);
 			g2d.setTransform(old);
-			//g2d.rotate(wall.getDegrees());
+			// g2d.rotate(wall.getDegrees());
 		}
 
 		if (powerup.isVisible())
@@ -175,7 +175,24 @@ public class Board extends JPanel implements Runnable {
 				else
 					g2d.setColor(new Color(60, 20, 120));
 				g2d.fillRect((int) tmpB.getX(), (int) tmpB.getY(), tmpB.getWidth(), tmpB.getHeight());
-					
+
+				if (isExplosion1) {
+					Thread explosionThread = new Thread() {
+						public void run() {
+							try {
+								g2d.fillRect((int) tmpB.getX(), (int) tmpB.getY(), 50, 50);
+								Thread.sleep(3000);
+								
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					};
+					explosionThread.start();
+
+					isExplosion1 = false;
+				}
 			}
 			// in case you have other things to rotate
 			g2d.setTransform(old);
@@ -282,6 +299,7 @@ public class Board extends JPanel implements Runnable {
 			player2.setY(0);
 		else if (player2.getY() < -100)
 			player2.setY(2000);
+		
 
 		// moving player1 pistol
 		if (player1.getWeapon() instanceof Pistol) {
@@ -290,7 +308,11 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				Pistol tmpW = tmpWs.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
+				if (checkCollisions(tmpW, rock) 
+						|| checkCollisions(tmpW, rock1)
+						|| checkCollisions(tmpW, rock2)
+						|| checkCollisions(tmpW, rock3)
+						|| checkCollisions(tmpW, wall))
 					tmpWs.remove(i);
 				else if (tmpW.isHit(player2)) {
 					tmpW.hit(player2);
@@ -308,7 +330,11 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				MachineGun tmpW1 = tmpWs.get(i);
 				tmpW1.move(tmpW1.getSpeed());
-				if (checkCollisions(tmpW1, rock) || checkCollisions(tmpW1, wall))
+				if (checkCollisions(tmpW1, rock)
+						|| checkCollisions(tmpW1, rock1)
+						|| checkCollisions(tmpW1, rock2)
+						|| checkCollisions(tmpW1, rock3)
+						|| checkCollisions(tmpW1, wall))
 					tmpWs.remove(i);
 				else if (tmpW1.isHit(player2)) {
 					tmpW1.hit(player2);
@@ -326,7 +352,12 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs.size(); i++) {
 				RPG tmpW2 = tmpWs.get(i);
 				tmpW2.move(tmpW2.getSpeed());
-				if (tmpW2.isHit(player2) || tmpW2.isHit(wall) || tmpW2.isHit(rock)) {
+				if (tmpW2.isHit(player2)
+						|| tmpW2.isHit(wall)
+						|| tmpW2.isHit(rock)
+						|| tmpW2.isHit(rock1)
+						|| tmpW2.isHit(rock2)
+						|| tmpW2.isHit(rock3)) {
 					isExplosion1 = true;
 					tmpW2.explode();
 					tmpWs.remove(i);
@@ -343,7 +374,12 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				Pistol tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
+				if (checkCollisions(tmpW, rock) 
+						|| checkCollisions(tmpW, rock1)
+						|| checkCollisions(tmpW, rock2)
+						|| checkCollisions(tmpW, rock3)
+						|| checkCollisions(tmpW, wall))
+
 					tmpWs2.remove(i);
 
 				else if (tmpW.isHit(player1)) {
@@ -361,7 +397,11 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				MachineGun tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (checkCollisions(tmpW, rock) || checkCollisions(tmpW, wall))
+				if (checkCollisions(tmpW, rock) 
+						|| checkCollisions(tmpW, rock1)
+						|| checkCollisions(tmpW, rock2)
+						|| checkCollisions(tmpW, rock3)
+						|| checkCollisions(tmpW, wall))
 					tmpWs2.remove(i);
 				else if (tmpW.isHit(player1)) {
 					tmpW.hit(player1);
@@ -379,7 +419,11 @@ public class Board extends JPanel implements Runnable {
 			for (int i = 0; i < tmpWs2.size(); i++) {
 				RPG tmpW = tmpWs2.get(i);
 				tmpW.move(tmpW.getSpeed());
-				if (tmpW.isHit(player1) || tmpW.isHit(wall) || tmpW.isHit(rock)) {
+				if (tmpW.isHit(player1) || tmpW.isHit(wall)
+						|| tmpW.isHit(rock)
+						|| tmpW.isHit(rock1)
+						|| tmpW.isHit(rock2)
+						|| tmpW.isHit(rock3)) {
 					tmpW.explode();
 					tmpWs2.remove(i);
 				}
@@ -461,6 +505,7 @@ public class Board extends JPanel implements Runnable {
 				player2.setWeapon((Weapon) powerupItem);
 			powerup.removeSelf();
 		}
+		
 
 		checkGameRunning(player1);
 		checkGameRunning(player2);
