@@ -1,9 +1,6 @@
 package info.finalproject.weapon;
 
 import java.awt.*;
-
-import javax.swing.Timer;
-
 import info.finalproject.actor.*;
 import info.finalproject.gui.*;
 
