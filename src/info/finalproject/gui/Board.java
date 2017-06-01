@@ -55,9 +55,9 @@ public class Board extends JPanel implements Runnable {
 		powerup1 = new Powerup(700, 700, 0, 20, 20, "images/crate.png", this);
 		rock = new Rock(600, 600, 100, 100, "images/Rock.png", this);
 		rock1 = new Rock(1000, 400, 100, 100, "images/Rock.png", this);
-		rock2 = new Rock(1550, 780, 100, 100, "images/Rock.png", this);
-		rock3 = new Rock(710, 110, 100, 100, "images/Rock.png", this);
-		wall = new Wall(700, 700, 0, 10, 1000, "images/Wall.png", this);
+		rock2 = new Rock(2000, 780, 100, 100, "images/Rock.png", this);
+		rock3 = new Rock(500, 110, 100, 100, "images/Rock.png", this);
+		wall = new Wall(700, 1500, 0, 10, 1000, "images/Wall.png", this);
 		tmpAngle = 0;
 		tmpAngle2 = 0;
 		special = fire = left = right = moveForward = moveBackward = false;
@@ -511,24 +511,116 @@ public class Board extends JPanel implements Runnable {
 			powerup.removeSelf();
 		}
 		
-		if (player1.getDirection() >= player1.getDirection() + 90 || player1.getDirection() <= player1.getDirection() - 90)
-			sx1 = sy1 = 2;
+		if (checkCollisions(player1, rock)) {
+			Rectangle overlap = player1.getBounds().intersection(rock.getBounds());
+			if (overlap.width < overlap.height && sy1 != 0)
+				sx1 = 0;
+			else if (overlap.width > overlap.height && sx1 != 0)
+				sy1 = 0;
+			else
+				sx1 = sy1 = 2;
 		
-		if (checkCollisions(player1, rock) 
-				|| checkCollisions(player1, rock1) 
-				|| checkCollisions(player1, rock2) 
-				|| checkCollisions(player1, rock3) 
-				|| checkCollisions(player1, wall)) 
-			sx1 = sy1 = 0;
+		}
+		
+		if (checkCollisions(player1, rock1)) {
+			Rectangle overlap = player1.getBounds().intersection(rock1.getBounds());
+			if (overlap.width < overlap.height && sy1 != 0)
+				sx1 = 0;
+			else if (overlap.width > overlap.height && sx1 != 0)
+				sy1 = 0;
+			else
+				sx1 = sy1 = 2;
+		}
+		
+		if (checkCollisions(player1, rock2)) {
+			Rectangle overlap = player1.getBounds().intersection(rock2.getBounds());
+			if (overlap.width < overlap.height && sy1 != 0)
+				sx1 = 0;
+			else if (overlap.width > overlap.height && sx1 != 0)
+				sy1 = 0;
+			else
+				sx1 = sy1 = 2;
+		
+		}
+		
+		if (checkCollisions(player1, rock3)) {
+			Rectangle overlap = player1.getBounds().intersection(rock3.getBounds());
+			if (overlap.width < overlap.height && sy1 != 0)
+				sx1 = 0;
+			else if (overlap.width > overlap.height && sx1 != 0)
+				sy1 = 0;
+			else
+				sx1 = sy1 = 2;
+		
+		}
+		
+		if (checkCollisions(player1, wall)) {
+			Rectangle overlap = player1.getBounds().intersection(wall.getBounds());
+			if (overlap.width < overlap.height && sy1 != 0)
+				sx1 = 0;
+			else if (overlap.width > overlap.height && sx1 != 0)
+				sy1 = 0;
+			else
+				sx1 = sy1 = 2;
+		
+		}
+		
+		if (checkCollisions(player2, rock)) {
+			Rectangle overlap = player2.getBounds().intersection(rock.getBounds());
+			if (overlap.width < overlap.height && sy2 != 0)
+				sx2 = 0;
+			else if (overlap.width > overlap.height && sx2 != 0)
+				sy2 = 0;
+			else
+				sx2 = sy2 = 2;
+		
+		}
+		
+		if (checkCollisions(player2, rock1)) {
+			Rectangle overlap = player2.getBounds().intersection(rock1.getBounds());
+			if (overlap.width < overlap.height && sy2 != 0)
+				sx2 = 0;
+			else if (overlap.width > overlap.height && sx2 != 0)
+				sy2 = 0;
+			else
+				sx2 = sy2 = 2;
+		
+		}
+		
+		if (checkCollisions(player2, rock2)) {
+			Rectangle overlap = player2.getBounds().intersection(rock2.getBounds());
+			if (overlap.width < overlap.height && sy2 != 0)
+				sx2 = 0;
+			else if (overlap.width > overlap.height && sx2 != 0)
+				sy2 = 0;
+			else
+				sx2 = sy2 = 2;
+		
+		}
+		
+		if (checkCollisions(player2, rock3)) {
+			Rectangle overlap = player2.getBounds().intersection(rock3.getBounds());
+			if (overlap.width < overlap.height && sy2 != 0)
+				sx2 = 0;
+			else if (overlap.width > overlap.height && sx2 != 0)
+				sy2 = 0;
+			else
+				sx2 = sy2 = 2;
+		
+		}
+		
+		if (checkCollisions(player2, wall)) {
+			Rectangle overlap = player2.getBounds().intersection(wall.getBounds());
+			if (overlap.width < overlap.height && sy2 != 0)
+				sx2 = 0;
+			else if (overlap.width > overlap.height && sx2 != 0)
+				sy2 = 0;
+			else
+				sx2 = sy2 = 2;
+		
+		}
+		
 
-		if (checkCollisions(player2, rock) 
-				|| checkCollisions(player2, rock1) 
-				|| checkCollisions(player2, rock2) 
-				|| checkCollisions(player2, rock3) 
-				|| checkCollisions(player2, wall)) 
-			sx2 = sy2 = 0;
-		else
-			sx2 = sy2 = 2;
 
 		checkGameRunning(player1);
 		checkGameRunning(player2);
