@@ -93,7 +93,7 @@ public class Board extends JPanel implements Runnable {
 		
 		randomPowUp1Exist = randomPowUp2Exist = false;
 		
-		respawntime = 5000;
+		respawntime = 3000;
 		
 		
 		rock = new Rock(100, 100, 100, 100, "images/Rock.png", this);
@@ -1345,7 +1345,7 @@ public class Board extends JPanel implements Runnable {
 			
 			System.out.println(randomPowUp1.getX());
 
-			respawntime = 5000;
+			respawntime = 3000;
 		}
 		else {
 			respawntime -= 1;
