@@ -83,10 +83,10 @@ public class Board extends JPanel implements Runnable {
 	private void initBoard() {
 		player1 = new Player(400, 1000, 0, 60, 60, "images/Shooter.png", 30,
 				new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
-		player2 = new Player(2200, 600, 0, 60, 60, "images/Shooter.png", 30,
+		player2 = new Player(1200, 600, 0, 60, 60, "images/Shooter.png", 30,
 				new Pistol(400, 300, 0, 50, 50, "images/missile.png", this), this);
-		powerup = new Powerup(1000, 1000, 0, 20, 20, "images/crate.png", this);
-		powerup1 = new Powerup(1600, 1200, 0, 20, 20, "images/crate.png", this);
+		powerup = new Powerup(500, 1000, 0, 20, 20, "images/crate.png", this);
+		powerup1 = new Powerup(800, 700, 0, 20, 20, "images/crate.png", this);
 		
 		randomPowUp1 = null;
 		randomPowUp2 = null;
@@ -453,27 +453,27 @@ public class Board extends JPanel implements Runnable {
 			
 			// if player1 get off the screen
 			// we make it appear from the opposite side of the screen
-			if (player1.getX() > 3000)
+			if (player1.getX() > 2000)
 				player1.setX(0);
 			else if (player1.getX() < -100)
-				player1.setX(3000);
+				player1.setX(2000);
 
-			if (player1.getY() > 2000)
+			if (player1.getY() > 1000)
 				player1.setY(0);
 			else if (player1.getY() < -100)
-				player1.setY(2000);
+				player1.setY(1000);
 
 			// if player2 get off the screen
 			// we make it appear from the opposite side of the screen
-			if (player2.getX() > 3000)
+			if (player2.getX() > 2000)
 				player2.setX(0);
 			else if (player2.getX() < -100)
-				player2.setX(3000);
+				player2.setX(2000);
 
-			if (player2.getY() > 2000)
+			if (player2.getY() > 1000)
 				player2.setY(0);
 			else if (player2.getY() < -100)
-				player2.setY(2000);
+				player2.setY(1000);
 			
 
 			// moving player1 pistol
