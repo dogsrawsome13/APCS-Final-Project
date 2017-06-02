@@ -43,4 +43,6 @@ public class Powerup extends Actor {
 		setVisible(false);
 		return this;
 	}
+	
+
 }

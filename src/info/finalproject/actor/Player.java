@@ -51,6 +51,16 @@ public class Player extends Actor {
 	public Weapon getWeapon() {
 		return myWeapon;
 	}
+	
+	public String getWeaponType() {
+		if (myWeapon instanceof MachineGun)
+			return "Machine Gun";
+		else if (myWeapon instanceof RPG)
+			return "RPG";
+		else
+			return "Pistol";
+			
+	}
 
 	public void setWeapon(Weapon weapon) {
 		myWeapon = weapon;
