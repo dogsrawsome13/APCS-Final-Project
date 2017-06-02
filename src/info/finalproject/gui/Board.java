@@ -423,13 +423,17 @@ public class Board extends JPanel implements Runnable {
 
 		if (r1.intersects(r2)) {
 			Actor powerupItem = null;
-			if (!(a1 instanceof Player) && a1 instanceof Powerup)
-				powerupItem = ((Powerup) a1).givePowerup();
-			if (!(a2 instanceof Player) && a2 instanceof Powerup)
-				powerupItem = ((Powerup) a2).givePowerup();
-			if (powerupItem != null && powerupItem instanceof Weapon && a1.equals(player1))
+			if (!(a1 instanceof Player) && a1 instanceof Powerup && a2.equals(player1))
+				powerupItem = ((Powerup) a1).givePowerup(player1);
+			if (!(a1 instanceof Player) && a1 instanceof Powerup && a2.equals(player2))
+				powerupItem = ((Powerup) a1).givePowerup(player2);
+			if (!(a2 instanceof Player) && a2 instanceof Powerup && a1.equals(player1))
+				powerupItem = ((Powerup) a2).givePowerup(player1);
+			if (!(a2 instanceof Player) && a2 instanceof Powerup && a1.equals(player2))
+				powerupItem = ((Powerup) a2).givePowerup(player2);
+			if (powerupItem != null && powerupItem instanceof Weapon)
 				player1.setWeapon((Weapon) powerupItem);
-			if (powerupItem != null && powerupItem instanceof Weapon && a1.equals(player2))
+			if (powerupItem != null && powerupItem instanceof Weapon)
 				player2.setWeapon((Weapon) powerupItem);
 			if (a1 instanceof Player && a2 instanceof Player)
 				return false;
@@ -774,14 +778,14 @@ public class Board extends JPanel implements Runnable {
 					player2.moveBackward(sx2, sy2);
 
 			if (checkCollisions(player1, powerup)) {
-				Actor powerupItem = powerup.givePowerup();
+				Actor powerupItem = powerup.givePowerup(player1);
 				if (powerupItem instanceof Weapon)
 					player1.setWeapon((Weapon) powerupItem);
 				powerup.removeSelf();
 			}
 			
 			if (checkCollisions(player1, powerup1)) {
-				Actor powerupItem = powerup1.givePowerup();
+				Actor powerupItem = powerup1.givePowerup(player1);
 				if (powerupItem instanceof Weapon)
 					player1.setWeapon((Weapon) powerupItem);
 				powerup1.removeSelf();
@@ -789,7 +793,7 @@ public class Board extends JPanel implements Runnable {
 			
 			if (randomPowUp1Exist)
 				if (checkCollisions(player1, randomPowUp1)) {
-					Actor powerupItem = randomPowUp1.givePowerup();
+					Actor powerupItem = randomPowUp1.givePowerup(player1);
 					if (powerupItem instanceof Weapon) {
 						player1.setWeapon((Weapon) powerupItem);
 						randomPowUp1.removeSelf();
@@ -800,7 +804,7 @@ public class Board extends JPanel implements Runnable {
 			
 			if (randomPowUp2Exist)
 				if (checkCollisions(player1, randomPowUp2)) {
-					Actor powerupItem = randomPowUp2.givePowerup();
+					Actor powerupItem = randomPowUp2.givePowerup(player1);
 					if (powerupItem instanceof Weapon) {
 						player1.setWeapon((Weapon) powerupItem);
 						randomPowUp2.removeSelf();
@@ -809,16 +813,15 @@ public class Board extends JPanel implements Runnable {
 
 			}
 
-
 			if (checkCollisions(player2, powerup)) {
-				Actor powerupItem = powerup.givePowerup();
+				Actor powerupItem = powerup.givePowerup(player2);
 				if (powerupItem instanceof Weapon)
 					player2.setWeapon((Weapon) powerupItem);
 				powerup.removeSelf();
 			}
 			
 			if (checkCollisions(player2, powerup1)) {
-				Actor powerupItem = powerup1.givePowerup();
+				Actor powerupItem = powerup1.givePowerup(player2);
 				if (powerupItem instanceof Weapon)
 					player2.setWeapon((Weapon) powerupItem);
 				powerup1.removeSelf();
@@ -826,7 +829,7 @@ public class Board extends JPanel implements Runnable {
 			
 			if (randomPowUp1Exist)
 				if (checkCollisions(player2, randomPowUp1)) {
-					Actor powerupItem = randomPowUp1.givePowerup();
+					Actor powerupItem = randomPowUp1.givePowerup(player2);
 					if (powerupItem instanceof Weapon)
 						player2.setWeapon((Weapon) powerupItem);
 					randomPowUp1.removeSelf();
@@ -835,7 +838,7 @@ public class Board extends JPanel implements Runnable {
 			
 			if (randomPowUp2Exist)
 				if (checkCollisions(player2, randomPowUp2)) {
-					Actor powerupItem = randomPowUp2.givePowerup();
+					Actor powerupItem = randomPowUp2.givePowerup(player2);
 					if (powerupItem instanceof Weapon)
 						player2.setWeapon((Weapon) powerupItem);
 					randomPowUp2.removeSelf();
