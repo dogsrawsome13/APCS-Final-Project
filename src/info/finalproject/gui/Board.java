@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package info.finalproject.gui;
 
 import java.awt.*;
@@ -1436,3 +1437,6 @@ public class Board extends JPanel implements Runnable {
 	}
 
 }
+=======
+
+>>>>>>> 09e4ef16d79916298dd8627cd00b8ebfa7bc1982
