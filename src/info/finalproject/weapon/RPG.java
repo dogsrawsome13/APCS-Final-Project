@@ -1,7 +1,6 @@
 package info.finalproject.weapon;
 
 import java.awt.*;
-
 import info.finalproject.actor.*;
 import info.finalproject.gui.*;
 
