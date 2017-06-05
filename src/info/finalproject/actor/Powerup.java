@@ -26,7 +26,7 @@ public class Powerup extends Actor {
 					"images/missile.png", getBoard());
 		else if (powerup <= 10) {
 			giveHealth(player);
-			return null;
+			return player.getWeapon();
 		}
 		else
 			return null;
